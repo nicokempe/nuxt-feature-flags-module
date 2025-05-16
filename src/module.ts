@@ -1,9 +1,10 @@
 import {
   defineNuxtModule,
   createResolver,
-  addImportsDir,
   addPlugin,
+  addImportsDir, type Resolver,
 } from '@nuxt/kit'
+import type { Nuxt } from '@nuxt/schema'
 
 export interface FeatureFlagsOptions {
   environment: string
@@ -21,19 +22,18 @@ export default defineNuxtModule<FeatureFlagsOptions>({
     environments: {},
   },
 
-  setup(options, nuxt) {
-    const resolver = createResolver(import.meta.url)
+  setup(options: FeatureFlagsOptions, nuxt: Nuxt): void {
+    const resolver: Resolver = createResolver(import.meta.url)
 
-    // Inject into public runtime config for client-side access
+    // Inject into runtime config for both client + server
     nuxt.options.runtimeConfig.public.featureFlags = options
-
-    // Inject into server runtime config for API/server usage
     nuxt.options.runtimeConfig.featureFlags = options
 
-    // Register runtime composables (like useFeatureFlag)
+    // Register composables (useFeatureFlag)
     addImportsDir(resolver.resolve('runtime/composables'))
 
-    // Register optional plugin (for hydration or SSR support if needed)
     addPlugin(resolver.resolve('runtime/plugin'))
+
+    addImportsDir(resolver.resolve('runtime/middleware'))
   },
 })
