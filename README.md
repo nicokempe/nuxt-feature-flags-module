@@ -1,15 +1,9 @@
-# Nuxt Feature Flags
-
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
 Lightweight, environment-based feature flag system for Nuxt 3 — made for developers who need dynamic feature control in routes, components, and APIs.
-
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/nicokempe/nuxt-feature-flags?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://feature-flags-docs.nicokempe.de) -->
 
 ## Features
 
@@ -31,7 +25,7 @@ Lightweight, environment-based feature flag system for Nuxt 3 — made for devel
 Install the module to your Nuxt application with one command:
 
 ```bash
-npx nuxi module add nuxt-feature-flags
+npx nuxi module add nuxt-feature-flags-module
 ```
 
 That's it! You can now use Nuxt Feature Flags in your Nuxt app ✨
@@ -70,14 +64,14 @@ That's it! You can now use Nuxt Feature Flags in your Nuxt app ✨
 
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/nuxt-feature-flags/latest.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-version-href]: https://npmjs.com/package/nuxt-feature-flags
+[npm-version-src]: https://img.shields.io/npm/v/nuxt-feature-flags-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-version-href]: https://npmjs.com/package/nuxt-feature-flags-module
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/nuxt-feature-flags.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-downloads-href]: https://npm.chart.dev/nuxt-feature-flags
+[npm-downloads-src]: https://img.shields.io/npm/dm/nuxt-feature-flags-module.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-downloads-href]: https://npm.chart.dev/nuxt-feature-flags-module
 
-[license-src]: https://img.shields.io/npm/l/nuxt-feature-flags.svg?style=flat&colorA=020420&colorB=00DC82
-[license-href]: https://npmjs.com/package/nuxt-feature-flags
+[license-src]: https://img.shields.io/npm/l/nuxt-feature-flags-module.svg?style=flat&colorA=020420&colorB=00DC82
+[license-href]: https://npmjs.com/package/nuxt-feature-flags-module
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt.js
 [nuxt-href]: https://nuxt.com

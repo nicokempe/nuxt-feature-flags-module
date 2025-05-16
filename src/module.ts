@@ -12,7 +12,7 @@ export interface FeatureFlagsOptions {
 
 export default defineNuxtModule<FeatureFlagsOptions>({
   meta: {
-    name: 'nuxt-feature-flags',
+    name: 'nuxt-feature-flags-module',
     configKey: 'featureFlags',
   },
 
