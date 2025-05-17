@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    assignees:
+      - "nicokempe"
+    commit-message:
+      prefix: "[pnpm] "
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    assignees:
+      - "nicokempe"
+    commit-message:
+      prefix: "[actions] "
