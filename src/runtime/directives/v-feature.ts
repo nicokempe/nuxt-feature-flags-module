@@ -1,5 +1,5 @@
 import type { Directive } from 'vue'
-import type { FeatureFlagsConfig } from '~/types/feature-flags'
+import type { FeatureFlagsConfig } from '../../../types/feature-flags'
 
 export const vFeature: Directive = {
   mounted(el, binding): void {

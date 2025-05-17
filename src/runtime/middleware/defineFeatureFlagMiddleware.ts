@@ -1,4 +1,4 @@
-import { useFeatureFlag } from '~/src/runtime/composables/useFeatureFlag'
+import { useFeatureFlag } from '../composables/useFeatureFlag'
 
 export const defineFeatureFlagMiddleware = (flag: string) => {
   return defineNuxtRouteMiddleware(() => {

@@ -1,4 +1,4 @@
-import type { FeatureFlagsConfig } from '~/types/feature-flags'
+import type { FeatureFlagsConfig } from '../../../types/feature-flags'
 
 export const useFeatureFlag = () => {
   const config: FeatureFlagsConfig = useRuntimeConfig().public.featureFlags
