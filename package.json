@@ -1,10 +1,27 @@
 {
   "name": "nuxt-feature-flags-module",
-  "version": "v2025.5.1-dev",
-  "description": "My new Nuxt module",
-  "repository": "nicokempe/nuxt-feature-flags-module",
+  "version": "2025.5.1-dev",
+  "description": "Lightweight, environment-based feature flag system for Nuxt 3 — made for developers who need dynamic feature control in routes, components, and APIs.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicokempe/nuxt-feature-flags-module"
+  },
+  "author": {
+    "name": "Nico Kempe",
+    "email": "kontakt@nicokempe.de",
+    "url": "https://www.nicokempe.de"
+  },
+  "sideEffects": false,
   "license": "MIT",
   "type": "module",
+  "keywords": [
+    "nuxt",
+    "nuxt3",
+    "nuxt-module",
+    "feature-flags",
+    "feature-toggle",
+    "feature-flag"
+  ],
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
