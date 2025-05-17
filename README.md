@@ -1,7 +1,6 @@
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
-[![Nuxt][nuxt-src]][nuxt-href]
 
 Lightweight, environment-based feature flag system for Nuxt 3 — made for developers who need dynamic feature control in routes, components, and APIs.
 
@@ -30,6 +29,48 @@ npx nuxi module add nuxt-feature-flags-module
 
 That's it! You can now use Nuxt Feature Flags in your Nuxt app ✨
 
+Then define your feature flags in `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['nuxt-feature-flags-module'],
+  featureFlags: {
+    environment: process.env.FEATURE_ENV || 'development',
+    environments: {
+      development: ['yourFeature1', 'yourFeature2'],
+      staging: ['yourFeature1'],
+      production: []
+    }
+  }
+})
+```
+
+Use in your app:
+
+```html
+<template>
+  <button v-feature="'yourFeature2'">Try Feature 2</button>
+</template>
+```
+
+Or via composable:
+```ts
+const { isEnabled } = useFeatureFlag()
+if (isEnabled('yourFeature1')) {
+  // do something
+}
+```
+
+Or in your server API:
+```ts
+export default defineEventHandler((event) => {
+  if (!isFeatureEnabled('yourFeature2', event)) {
+    return sendError(event, createError({ statusCode: 403, message: 'Feature 2 is disabled' }))
+  }
+
+  return { message: 'Feature unlocked 🎉' }
+})
+```
 
 ## Contribution
 
@@ -63,6 +104,9 @@ That's it! You can now use Nuxt Feature Flags in your Nuxt app ✨
 </details>
 
 
+## License
+This project is licensed under the [MIT License](https://github.com/nicokempe/nuxt-feature-flags-module/blob/main/LICENSE).
+
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/nuxt-feature-flags-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
 [npm-version-href]: https://npmjs.com/package/nuxt-feature-flags-module
@@ -72,6 +116,3 @@ That's it! You can now use Nuxt Feature Flags in your Nuxt app ✨
 
 [license-src]: https://img.shields.io/npm/l/nuxt-feature-flags-module.svg?style=flat&colorA=020420&colorB=00DC82
 [license-href]: https://npmjs.com/package/nuxt-feature-flags-module
-
-[nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt.js
-[nuxt-href]: https://nuxt.com
