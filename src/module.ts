@@ -26,8 +26,8 @@ export default defineNuxtModule<FeatureFlagsOptions>({
     const resolver: Resolver = createResolver(import.meta.url)
 
     // Inject into runtime config for both client + server
-    nuxt.options.runtimeConfig.public.featureFlags = options
-    nuxt.options.runtimeConfig.featureFlags = options
+    nuxt.options.runtimeConfig.public.featureFlags = options as FeatureFlagsOptions
+    nuxt.options.runtimeConfig.featureFlags = options as FeatureFlagsOptions
 
     // Register composables (useFeatureFlag)
     addImportsDir(resolver.resolve('runtime/composables'))
