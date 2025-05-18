@@ -1,3 +1,12 @@
+## [2025.5.2](https://github.com/nicokempe/nuxt-feature-flags-module/compare/2025.5.1-dev...2025.5.2) (2025-05-18)
+
+
+### Features
+
+* Create dependabot.yml ([db13f6d](https://github.com/nicokempe/nuxt-feature-flags-module/commit/db13f6dd1f0ae0177d6085f495ccf0383db50fdd))
+
+
+
 ## [2025.5.1-dev](https://github.com/nicokempe/nuxt-feature-flags-module/compare/6bb0db20595dc370258db27b8d8af33faab16104...2025.5.1-dev) (2025-05-17)
 
 
