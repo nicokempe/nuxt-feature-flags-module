@@ -1,3 +1,5 @@
+[![Nuxt banner](./.github/media/banner.svg)](https://github.com/nicokempe/nuxt-feature-flags-module)
+
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
