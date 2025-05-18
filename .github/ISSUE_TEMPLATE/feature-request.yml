@@ -1,0 +1,25 @@
+name: "🚀 New feature proposal"
+description: Suggest an idea for this Agent
+labels: [":sparkles: feature request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Before you start:**
+
+         This form is only for submitting feature requests. If you have a usage question
+         or are unsure if this is really a bug, make sure to:
+
+         - Ask on the [Discord Server](https://discord.gg/t9frQmmqPe)
+         - Ask in the [GitHub Discussions](https://github.com/nicokempe/nuxt-feature-flags-module/discussions)
+
+         Also try to search for your issue - it may have already been answered or even fixed in some branch.
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: What problem does this feature solve?
+      description: |
+        Explain your use case, context, and rationale behind this feature request. More importantly, what is the end user experience you are trying to build that led to the need for this feature?
+      placeholder: Problem description
+    validations:
+      required: true
