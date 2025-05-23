@@ -5,6 +5,14 @@
         🧪 Nuxt Feature Flags Playground
       </h1>
 
+      <!-- Promo Banner (Scheduled Feature) -->
+      <div
+        v-if="isEnabled('promoBanner')"
+        class="bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 text-white text-center py-4 px-6 rounded-xl shadow-lg border border-white/10"
+      >
+        🎉 Special Promo! This banner is only visible between May 16 – June 1, 2025.
+      </div>
+
       <!-- Environment Info -->
       <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/10 shadow-lg">
         <h2 class="text-lg font-semibold mb-2 text-emerald-300">
