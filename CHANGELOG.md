@@ -1,3 +1,32 @@
+## v2025.6.0
+
+[compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/2025.5.2...v2025.6.0)
+
+### 🚀 Enhancements
+
+- **playground:** Enhance layout and styling for feature flag protection page message ([6adf62a](https://github.com/nicokempe/nuxt-feature-flags-module/commit/6adf62a))
+
+### 📖 Documentation
+
+- **flags:** Enhance code documentation for feature flag utilities and middleware ([b65cd00](https://github.com/nicokempe/nuxt-feature-flags-module/commit/b65cd00))
+
+### 🏡 Chore
+
+- **plugin:** Remove console log from feature flags plugin ([f534a00](https://github.com/nicokempe/nuxt-feature-flags-module/commit/f534a00))
+
+### ❤️ Contributors
+
+- Nico Kempe <git@nicokempe.de>
+
+## [2025.5.3](https://github.com/nicokempe/nuxt-feature-flags-module/compare/2025.5.2...2025.5.3) (2025-05-23)
+
+
+### Features
+
+* **playground:** enhance layout and styling for feature flag protection page message ([6adf62a](https://github.com/nicokempe/nuxt-feature-flags-module/commit/6adf62a0571055589b749436aa7e8fecf1cb4628))
+
+
+
 ## [2025.5.2](https://github.com/nicokempe/nuxt-feature-flags-module/compare/2025.5.1-dev...2025.5.2) (2025-05-18)
 
 

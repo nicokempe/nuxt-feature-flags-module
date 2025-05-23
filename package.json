@@ -1,6 +1,6 @@
 {
   "name": "nuxt-feature-flags-module",
-  "version": "2025.5.2",
+  "version": "2025.6.0",
   "description": "Lightweight, environment-based feature flag system for Nuxt 3 — made for developers who need dynamic feature control in routes, components, and APIs.",
   "repository": {
     "type": "git",
