@@ -2,38 +2,28 @@ import {
   defineNuxtModule,
   createResolver,
   addPlugin,
-  addImportsDir, type Resolver,
+  addImportsDir,
 } from '@nuxt/kit'
-import type { Nuxt } from '@nuxt/schema'
 
-export interface FeatureFlagsOptions {
-  environment: string
-  environments: Record<string, string[]>
-}
+import type { FeatureFlagsConfig } from '../types/feature-flags'
 
-export default defineNuxtModule<FeatureFlagsOptions>({
+export default defineNuxtModule<FeatureFlagsConfig>({
   meta: {
     name: 'nuxt-feature-flags-module',
     configKey: 'featureFlags',
   },
-
   defaults: {
     environment: 'production',
     environments: {},
   },
+  setup(options, nuxt) {
+    const resolver = createResolver(import.meta.url)
 
-  setup(options: FeatureFlagsOptions, nuxt: Nuxt): void {
-    const resolver: Resolver = createResolver(import.meta.url)
+    nuxt.options.runtimeConfig.public.featureFlags = options
+    nuxt.options.runtimeConfig.featureFlags = options
 
-    // Inject into runtime config for both client + server
-    nuxt.options.runtimeConfig.public.featureFlags = options as FeatureFlagsOptions
-    nuxt.options.runtimeConfig.featureFlags = options as FeatureFlagsOptions
-
-    // Register composables (useFeatureFlag)
     addImportsDir(resolver.resolve('runtime/composables'))
-
     addPlugin(resolver.resolve('runtime/plugin'))
-
     addImportsDir(resolver.resolve('runtime/middleware'))
   },
 })
