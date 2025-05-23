@@ -1,13 +1,7 @@
 import type { Directive } from 'vue'
-import type { FeatureFlagsConfig, FeatureFlag, FeatureFlagInput } from '../../../types/feature-flags'
+import type { FeatureFlagsConfig, FeatureFlagInput } from '../../../types/feature-flags'
+import { isFlagActiveNow } from '../utils/isFlagActiveNow'
 import { useRuntimeConfig } from '#imports'
-
-const isFlagActiveNow = (flag: FeatureFlag): boolean => {
-  const now = Date.now()
-  const from = flag.activeFrom ? Date.parse(flag.activeFrom) : -Infinity
-  const until = flag.activeUntil ? Date.parse(flag.activeUntil) : Infinity
-  return now >= from && now <= until
-}
 
 export const vFeature: Directive = {
   mounted(el: HTMLElement, binding: { value: string }) {

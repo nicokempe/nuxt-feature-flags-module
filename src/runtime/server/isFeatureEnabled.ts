@@ -1,12 +1,5 @@
 import type { H3Event } from 'h3'
-import type { FeatureFlag } from '../../../types/feature-flags'
-
-const isFlagActiveNow = (flag: FeatureFlag): boolean => {
-  const now = Date.now()
-  const from = flag.activeFrom ? Date.parse(flag.activeFrom) : -Infinity
-  const until = flag.activeUntil ? Date.parse(flag.activeUntil) : Infinity
-  return now >= from && now <= until
-}
+import { isFlagActiveNow } from '../utils/isFlagActiveNow'
 
 export const isFeatureEnabled = (feature: string, event?: H3Event): boolean => {
   const config = useRuntimeConfig(event).featureFlags
