@@ -2,11 +2,28 @@ import type { FeatureFlagsConfig, FeatureFlag, FeatureFlagInput } from '../../..
 import { isFlagActiveNow } from '../utils/isFlagActiveNow'
 import { useRuntimeConfig } from '#imports'
 
+/**
+ * Provides runtime access to feature flag utilities within the client app.
+ * Supports both static and scheduled flags.
+ *
+ * @returns An object with utilities:
+ * - `isEnabled(flagName)` — checks if a feature is currently active
+ * - `listFlags()` — returns all currently active flag names (scheduled + static)
+ */
 export const useFeatureFlag = () => {
   const config: FeatureFlagsConfig = useRuntimeConfig().public.featureFlags
   const env = config.environment
   const flags: FeatureFlagInput[] = config.environments?.[env] || []
 
+  /**
+   * Checks whether a feature flag is currently enabled.
+   * Supports:
+   * - Static string flags
+   * - Scheduled flags (with `activeFrom` and/or `activeUntil`)
+   *
+   * @param flagName - The name of the feature flag to check.
+   * @returns `true` if the feature is currently enabled, otherwise `false`.
+   */
   const isEnabled = (flagName: string): boolean => {
     for (const flag of flags) {
       if (typeof flag === 'string' && flag === flagName) return true
@@ -15,6 +32,12 @@ export const useFeatureFlag = () => {
     return false
   }
 
+  /**
+   * Lists all currently active feature flags for the environment.
+   * Preserves the order defined in `nuxt.config.ts`.
+   *
+   * @returns Array of enabled feature flag names.
+   */
   const listFlags = (): string[] => {
     return flags
       .filter((flag): flag is FeatureFlag =>
