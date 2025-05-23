@@ -12,11 +12,11 @@ Lightweight, environment-based feature flag system for Nuxt 3 — made for devel
 - 🧪 Enable alpha/beta features for staging, preview, or development environments
 - 🔐 Limit access to specific APIs by feature flag in server handlers
 - 🎯 Roll out features to internal QA teams without branching or releases
+- 📆 Schedule feature launches for specific environments or timeframes (planned)
 
 ## Planned Features
 
 - 🔄 Dynamic feature flag updates without server restarts through a remote config service (planned)
-- 📆 Schedule feature launches for specific environments or timeframes (planned)
 - 📊 A/B testing support for feature flags (planned)
 - 📈 Analytics for feature flag usage (planned)
 - 🧍‍♂️ Show features only for specific users (e.g., staff-only UIs, admin panels etc.) (planned)
@@ -58,6 +58,7 @@ Use in your app:
 Or via composable:
 ```ts
 const { isEnabled } = useFeatureFlag()
+
 if (isEnabled('yourFeature1')) {
   // do something
 }
