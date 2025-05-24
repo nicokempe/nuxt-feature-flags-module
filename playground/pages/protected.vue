@@ -14,4 +14,9 @@
 definePageMeta({
   middleware: ['feature-new-system'],
 })
+
+useSeoMeta({
+  title: 'Nuxt Feature Flags Playground',
+  description: 'A playground for the Nuxt Feature Flags Module. Test and explore feature flags in a Nuxt application.',
+})
 </script>
