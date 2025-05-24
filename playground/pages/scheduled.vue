@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-neutral-950 text-white px-6 py-12">
     <div class="max-w-4xl mx-auto space-y-10">
-      <h1 class="text-3xl font-bold text-emerald-400">
+      <h1 class="text-2xl font-bold mb-4">
         🕒 Scheduled Feature Flags
       </h1>
 
@@ -85,5 +85,10 @@ const scheduledFlags = computed(() => {
   return flags.filter((flag): flag is { name: string, activeFrom?: string, activeUntil?: string } => {
     return typeof flag === 'object' && typeof flag.name === 'string'
   })
+})
+
+useSeoMeta({
+  title: 'Nuxt Feature Flags Playground',
+  description: 'A playground for the Nuxt Feature Flags Module. Test and explore feature flags in a Nuxt application.',
 })
 </script>
