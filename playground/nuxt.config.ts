@@ -1,6 +1,9 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
   devtools: { enabled: true },
+  nitro: {
+    preset: 'cloudflare_pages',
+  },
 
   featureFlags: {
     environment: process.env.FEATURE_ENV || 'development',
