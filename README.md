@@ -12,10 +12,11 @@ Lightweight, environment-based feature flag system for Nuxt 3 — made for devel
 - 🧪 Enable alpha/beta features for staging, preview, or development environments
 - 🔐 Limit access to specific APIs by feature flag in server handlers
 - 🎯 Roll out features to internal QA teams without branching or releases
-- 📆 Schedule feature launches for specific environments or timeframes (planned)
+- 📆 Schedule feature launches for specific environments or timeframes
 
 ## Planned Features
 
+- 🧩 Nuxt DevTools integration with a Feature Flag Explorer and Environment Switcher (planned)
 - 🔄 Dynamic feature flag updates without server restarts through a remote config service (planned)
 - 📊 A/B testing support for feature flags (planned)
 - 📈 Analytics for feature flag usage (planned)
