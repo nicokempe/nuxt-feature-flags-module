@@ -1,6 +1,38 @@
 # Changelog
 
 
+## v2025.5.5
+
+[compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.5.4...v2025.5.5)
+
+### 🚀 Enhancements
+
+- **playground:** Use Cloudlare Pages Nitro preset for deployment ([f8a0035](https://github.com/nicokempe/nuxt-feature-flags-module/commit/f8a0035))
+- **playground:** Add default layout with responsive header and footer ([b5317cc](https://github.com/nicokempe/nuxt-feature-flags-module/commit/b5317cc))
+- **playground:** Polish index page with improved button interactions, spacing fixes, and animations ([26d91d9](https://github.com/nicokempe/nuxt-feature-flags-module/commit/26d91d9))
+- **playground:** Add SEO metadata to protected feature page ([9d817f4](https://github.com/nicokempe/nuxt-feature-flags-module/commit/9d817f4))
+- **playground:** Update scheduled page title design and add SEO metadata ([4b9f89d](https://github.com/nicokempe/nuxt-feature-flags-module/commit/4b9f89d))
+- **package:** Update release script changelog command ([a5dee20](https://github.com/nicokempe/nuxt-feature-flags-module/commit/a5dee20))
+
+### 🩹 Fixes
+
+- **package:** Remove comma-typo from package.json ([8e4ae2a](https://github.com/nicokempe/nuxt-feature-flags-module/commit/8e4ae2a))
+
+### 📖 Documentation
+
+- **changelog:** Add full changelog for 2025.5.1-dev to 2025.5.4 ([c6d75ad](https://github.com/nicokempe/nuxt-feature-flags-module/commit/c6d75ad))
+- **changelog:** Add full changelog for 2025.5.1-dev to 2025.5.4 ([e8c4dc7](https://github.com/nicokempe/nuxt-feature-flags-module/commit/e8c4dc7))
+- **readme:** Update planned features and fix scheduling typo ([b334aa8](https://github.com/nicokempe/nuxt-feature-flags-module/commit/b334aa8))
+
+### 🏡 Chore
+
+- **playground:** Remove unused import ([52a6b1e](https://github.com/nicokempe/nuxt-feature-flags-module/commit/52a6b1e))
+- **package:** Remove outdated changelog command ([77ec2d4](https://github.com/nicokempe/nuxt-feature-flags-module/commit/77ec2d4))
+
+### ❤️ Contributors
+
+- Nico Kempe <git@nicokempe.de>
+
 ## v2025.5.4
 
 [compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/2025.5.2...v2025.5.4)
