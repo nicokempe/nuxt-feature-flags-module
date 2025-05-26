@@ -20,3 +20,13 @@ updates:
       - "nicokempe"
     commit-message:
       prefix: "[actions] "
+
+  - package-ecosystem: npm
+    directory: /playground
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /test/fixtures/basic
+    schedule:
+      interval: daily
