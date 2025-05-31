@@ -83,7 +83,7 @@
         </h2>
         <div v-if="!isEnabled('checkoutUI')">
           <p class="text-red-400">
-            ❌ The <code>test</code> feature is currently disabled.
+            ❌ The <code>checkoutUI</code> feature is currently disabled.
           </p>
         </div>
         <div v-else>
