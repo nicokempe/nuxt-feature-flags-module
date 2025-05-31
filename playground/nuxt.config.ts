@@ -36,5 +36,10 @@ export default defineNuxtConfig({
       staging: ['newSystem'],
       production: [],
     },
+    validation: {
+      mode: 'warn',
+      includeGlobs: ['**/*.{vue,ts,js}'],
+      excludeGlobs: ['node_modules', '.nuxt', 'dist'],
+    },
   },
 })

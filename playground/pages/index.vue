@@ -77,6 +77,19 @@
       </div>
     </div>
 
+    <!-- Non-existing feature flag use to trigger strict mode -->
+    <div class="hidden">
+      <p v-feature="'nonExistingFlagDirective'">
+        This paragraph is only visible if the non-existing flag is enabled. It is using the v-feature directive to conditionally render content based on the feature flag status.
+      </p>
+    </div>
+
+    <div class="hidden">
+      <p v-if="isEnabled('nonExistingFlagVif')">
+        This paragraph is only visible if the non-existing flag is enabled. It is using the v-if directive to conditionally render content based on the feature flag status.
+      </p>
+    </div>
+
     <!-- Modal -->
     <div
       v-if="showBetaModal"
