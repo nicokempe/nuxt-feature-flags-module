@@ -69,7 +69,7 @@ export async function validateFeatureFlags(
   interface FileContext { path: string, content: string }
   const contexts: FileContext[] = []
 
-  for (const relativePath of allFiles) {
+  await Promise.all(allFiles.map(async (relativePath) => {
     const absolutePath: string = resolvePath(rootDir, relativePath)
     try {
       const content: string = await readFile(absolutePath, 'utf-8')
@@ -81,7 +81,7 @@ export async function validateFeatureFlags(
         error,
       )
     }
-  }
+  }))
 
   // 6. Extract “used” flags along with location info
   type UsedFlagInfo = { name: string, file: string, line: number, column: number }
