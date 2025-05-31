@@ -75,6 +75,27 @@
           Redirects to <code>/404</code> unless <code>'newSystem'</code> is active.
         </p>
       </div>
+
+      <!-- Variant Info -->
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/10 shadow-lg">
+        <h2 class="text-lg font-semibold mb-2 text-emerald-300">
+          🧪 Feature Variants
+        </h2>
+        <div v-if="!isEnabled('checkoutUI')">
+          <p class="text-red-400">
+            ❌ The <code>test</code> feature is currently disabled.
+          </p>
+        </div>
+        <div v-else>
+          <div v-feature="'checkoutUI:v1'">
+            This is the <strong>v1</strong> variant of the <code>checkoutUI</code> feature.
+          </div>
+          <div v-feature="'checkoutUI:v2'">
+            This is the <strong>v2</strong> variant of the <code>checkoutUI</code> feature.
+          </div>
+          <button @click="resetVersionFlag('checkoutUI')">Reset</button>
+        </div>
+      </div>
     </div>
 
     <!-- Modal -->
@@ -110,10 +131,13 @@ const showBetaModal = ref(false)
 function navigateToProtected() {
   if (isEnabled('newSystem')) {
     navigateTo('/protected')
-  }
-  else {
+  } else {
     navigateTo('/404')
   }
+}
+
+function resetVersionFlag(flagName: string) {
+  localStorage.removeItem(flagName)
 }
 
 useSeoMeta({

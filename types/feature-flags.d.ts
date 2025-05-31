@@ -4,6 +4,8 @@ export interface FeatureFlag {
   name: string
   activeFrom?: string
   activeUntil?: string
+  variants?: string[]
+  distribution?: number[]
 }
 
 export interface FeatureFlagsConfig {

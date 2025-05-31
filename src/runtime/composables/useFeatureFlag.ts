@@ -27,7 +27,7 @@ export const useFeatureFlag = () => {
   const isEnabled = (flagName: string): boolean => {
     for (const flag of flags) {
       if (typeof flag === 'string' && flag === flagName) return true
-      if (typeof flag === 'object' && flag.name === flagName && isFlagActiveNow(flag)) return true
+      if (typeof flag === 'object' && flag.name === flagName && ((!flag?.activeFrom || !flag?.activeUntil) ? true : isFlagActiveNow(flag))) return true
     }
     return false
   }
