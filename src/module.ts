@@ -3,9 +3,11 @@ import {
   createResolver,
   addPlugin,
   addImportsDir,
+  type Resolver,
 } from '@nuxt/kit'
-
+import type { Nuxt } from '@nuxt/schema'
 import type { FeatureFlagsConfig } from '../types/feature-flags'
+import { validateFeatureFlags } from './runtime/utils/flagValidator'
 
 export default defineNuxtModule<FeatureFlagsConfig>({
   meta: {
@@ -13,11 +15,20 @@ export default defineNuxtModule<FeatureFlagsConfig>({
     configKey: 'featureFlags',
   },
   defaults: {
+    // Default environment if none is provided
     environment: 'production',
+
+    // No flags declared by default
     environments: {},
+
+    validation: {
+      mode: 'warn', // can be 'disabled' | 'warn' | 'error'
+      includeGlobs: [], // default to ['**/*.{vue,ts,js}'] if left empty
+      excludeGlobs: [], // default to ['node_modules','.nuxt','dist'] if left empty
+    },
   },
-  setup(options, nuxt) {
-    const resolver = createResolver(import.meta.url)
+  setup(options: FeatureFlagsConfig, nuxt: Nuxt): void {
+    const resolver: Resolver = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.public.featureFlags = options
     nuxt.options.runtimeConfig.featureFlags = options
@@ -25,5 +36,18 @@ export default defineNuxtModule<FeatureFlagsConfig>({
     addImportsDir(resolver.resolve('runtime/composables'))
     addPlugin(resolver.resolve('runtime/plugin'))
     addImportsDir(resolver.resolve('runtime/middleware'))
+
+    // Run validation at `ready` (after Nuxt merges config)
+    nuxt.hook('ready', async (): Promise<void> => {
+      // Skip if no environments are defined
+      if (!options.environments || Object.keys(options.environments).length === 0) {
+        return
+      }
+      // Skip if user explicitly set mode to 'disabled'
+      if (options.validation?.mode === 'disabled') {
+        return
+      }
+      await validateFeatureFlags(options, nuxt.options.rootDir)
+    })
   },
 })
