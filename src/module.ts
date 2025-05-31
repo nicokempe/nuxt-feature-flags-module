@@ -39,14 +39,6 @@ export default defineNuxtModule<FeatureFlagsConfig>({
 
     // Run validation at `ready` (after Nuxt merges config)
     nuxt.hook('ready', async (): Promise<void> => {
-      // Skip if no environments are defined
-      if (!options.environments || Object.keys(options.environments).length === 0) {
-        return
-      }
-      // Skip if user explicitly set mode to 'disabled'
-      if (options.validation?.mode === 'disabled') {
-        return
-      }
       await validateFeatureFlags(options, nuxt.options.rootDir)
     })
   },
