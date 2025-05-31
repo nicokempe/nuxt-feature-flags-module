@@ -37,7 +37,7 @@ export default defineNuxtConfig({
       production: [],
     },
     validation: {
-      mode: 'error',
+      mode: 'warn',
       includeGlobs: ['**/*.{vue,ts,js}'],
       excludeGlobs: ['node_modules', '.nuxt', 'dist'],
     },
