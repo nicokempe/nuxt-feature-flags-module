@@ -64,6 +64,7 @@
     "@types/node": "latest",
     "changelogen": "^0.6.1",
     "eslint": "^9.26.0",
+    "globby": "^14.1.0",
     "nuxt": "^3.17.3",
     "typescript": "~5.8.3",
     "vitest": "^3.1.3",
