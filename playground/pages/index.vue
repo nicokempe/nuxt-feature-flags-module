@@ -93,7 +93,9 @@
           <div v-feature="'checkoutUI:v2'">
             This is the <strong>v2</strong> variant of the <code>checkoutUI</code> feature.
           </div>
-          <button @click="resetVersionFlag('checkoutUI')">Reset</button>
+          <button @click="resetVersionFlag('checkoutUI')">
+            Reset
+          </button>
         </div>
       </div>
     </div>
@@ -144,7 +146,8 @@ const showBetaModal = ref(false)
 function navigateToProtected() {
   if (isEnabled('newSystem')) {
     navigateTo('/protected')
-  } else {
+  }
+  else {
     navigateTo('/404')
   }
 }
