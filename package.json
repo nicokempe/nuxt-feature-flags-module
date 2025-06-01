@@ -4,7 +4,7 @@
   "description": "Lightweight, environment-based feature flag system for Nuxt 3 — made for developers who need dynamic feature control in routes, components, and APIs.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nicokempe/nuxt-feature-flags-module"
+    "url": "git+https://github.com/nicokempe/nuxt-feature-flags-module.git"
   },
   "author": {
     "name": "Nico Kempe",
