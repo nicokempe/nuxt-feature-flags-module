@@ -13,14 +13,18 @@ Lightweight, environment-based feature flag system for Nuxt 3 — made for devel
 - 🔐 Limit access to specific APIs by feature flag in server handlers
 - 🎯 Roll out features to internal QA teams without branching or releases
 - 📆 Schedule feature launches for specific environments or timeframes
+- 🕵️‍♀️ Detect undeclared feature flags at build time with configurable validation and precise file context
 
 ## Planned Features
 
-- 🧩 Nuxt DevTools integration with a Feature Flag Explorer and Environment Switcher (planned)
-- 🔄 Dynamic feature flag updates without server restarts through a remote config service (planned)
-- 📊 A/B testing support for feature flags (planned)
-- 📈 Analytics for feature flag usage (planned)
-- 🧍‍♂️ Show features only for specific users (e.g., staff-only UIs, admin panels etc.) (planned)
+- 🧩 Nuxt DevTools integration with a Feature Flag Explorer and Environment Switcher
+- 🔄 Dynamic feature flag updates without server restarts through a remote config service
+- 📊 A/B testing support for feature flags
+- 📈 Analytics for feature flag usage
+- 🧍‍♂️ Show features only for specific users (e.g., staff-only UIs, admin panels etc.)
+- 🧬 Environment inheritance which lets environments inherit feature flags from others
+- 💡 Flag descriptions / metadata for better documentation, DevTools tooltips, or internal usage notes
+- 🛠 Programmatic overrides to toggle or override feature flags dynamically at runtime (e.g., per user or session)
 
 ## Quick Setup
 

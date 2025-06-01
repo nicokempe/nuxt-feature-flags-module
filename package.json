@@ -46,6 +46,7 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release --patch --bump && npm publish && git push --follow-tags",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
@@ -63,6 +64,7 @@
     "@types/node": "latest",
     "changelogen": "^0.6.1",
     "eslint": "^9.26.0",
+    "globby": "^14.1.0",
     "nuxt": "^3.17.3",
     "typescript": "~5.8.3",
     "vitest": "^3.1.3",

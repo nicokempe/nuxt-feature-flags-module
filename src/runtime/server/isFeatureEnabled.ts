@@ -1,5 +1,7 @@
 import type { H3Event } from 'h3'
 import { isFlagActiveNow } from '../utils/isFlagActiveNow'
+import { useRuntimeConfig } from '#imports'
+import type { FeatureFlagInput, FeatureFlagsConfig } from '~/types/feature-flags'
 
 /**
  * Server-side utility to check if a feature flag is currently enabled.
@@ -19,9 +21,9 @@ import { isFlagActiveNow } from '../utils/isFlagActiveNow'
  * ```
  */
 export const isFeatureEnabled = (feature: string, event?: H3Event): boolean => {
-  const config = useRuntimeConfig(event).featureFlags
-  const env = config.environment
-  const flags = config.environments?.[env] || []
+  const config: FeatureFlagsConfig = useRuntimeConfig(event).featureFlags
+  const env: string = config.environment
+  const flags: FeatureFlagInput[] = config.environments?.[env] || []
 
   for (const flag of flags) {
     if (typeof flag === 'string' && flag === feature) return true
