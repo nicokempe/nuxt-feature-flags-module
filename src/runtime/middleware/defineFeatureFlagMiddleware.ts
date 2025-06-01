@@ -1,4 +1,5 @@
 import { useFeatureFlag } from '../composables/useFeatureFlag'
+import { defineNuxtRouteMiddleware, showError } from '#app'
 
 /**
  * Creates a route-level middleware that blocks access to the route
