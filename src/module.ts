@@ -7,6 +7,7 @@ import {
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { FeatureFlagsConfig } from '../types/feature-flags'
+import { validateUndeclaredFeatureFlags } from './runtime/utils/undeclaredValidator'
 import { validateFeatureFlags } from './runtime/utils/flagValidator'
 
 export default defineNuxtModule<FeatureFlagsConfig>({
@@ -39,7 +40,8 @@ export default defineNuxtModule<FeatureFlagsConfig>({
 
     // Run validation at `ready` (after Nuxt merges config)
     nuxt.hook('ready', async (): Promise<void> => {
-      await validateFeatureFlags(options, nuxt.options.rootDir)
+      await validateUndeclaredFeatureFlags(options, nuxt.options.rootDir)
+      await validateFeatureFlags(options)
     })
   },
 })
