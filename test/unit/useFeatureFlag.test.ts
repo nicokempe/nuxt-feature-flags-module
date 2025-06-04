@@ -1,7 +1,14 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useFeatureFlag } from '../../src/runtime/composables/useFeatureFlag'
+import type { FeatureFlagsConfig } from '../../types/feature-flags'
 
-let runtimeConfig: any
+interface RuntimeConfig {
+  public: {
+    featureFlags: FeatureFlagsConfig
+  }
+}
+
+let runtimeConfig: RuntimeConfig
 
 vi.mock('#imports', () => ({
   useRuntimeConfig: () => runtimeConfig,

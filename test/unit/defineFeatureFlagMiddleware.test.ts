@@ -2,11 +2,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 const mockIsEnabled = vi.fn()
 const mockShowError = vi.fn()
-const mockDefineNuxtRouteMiddleware = vi.fn((fn: any) => fn)
+const mockDefineNuxtRouteMiddleware = vi.fn((fn: () => void) => fn)
 
 vi.mock('#app', () => ({
-  defineNuxtRouteMiddleware: (...args: any[]) => mockDefineNuxtRouteMiddleware(...args),
-  showError: (...args: any[]) => mockShowError(...args),
+  defineNuxtRouteMiddleware: (fn: () => void) => mockDefineNuxtRouteMiddleware(fn),
+  showError: (...args: unknown[]) => mockShowError(...args),
 }))
 vi.mock('../../src/runtime/composables/useFeatureFlag', () => ({
   useFeatureFlag: () => ({ isEnabled: mockIsEnabled }),

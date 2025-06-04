@@ -1,7 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { isFeatureEnabled } from '../../src/runtime/server/isFeatureEnabled'
+import type { FeatureFlagsConfig } from '../../types/feature-flags'
 
-let runtimeConfig: any
+interface RuntimeConfig {
+  featureFlags: FeatureFlagsConfig
+}
+
+let runtimeConfig: RuntimeConfig
 
 vi.mock('#imports', () => ({
   useRuntimeConfig: () => runtimeConfig,

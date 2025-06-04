@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mkdtemp, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { validateFeatureFlags } from '../../src/runtime/utils/flagValidator'
 
 let dir: string
@@ -17,7 +17,7 @@ afterEach(async () => {
 describe('flagValidator', () => {
   it('warns on missing flags in warn mode', async () => {
     const file = join(dir, 'test.ts')
-    await writeFile(file, "isEnabled('missing')")
+    await writeFile(file, 'isEnabled(\'missing\')')
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     await validateFeatureFlags({
       environment: 'prod',
@@ -30,7 +30,7 @@ describe('flagValidator', () => {
 
   it('throws on missing flags in error mode', async () => {
     const file = join(dir, 'test2.ts')
-    await writeFile(file, "isEnabled('missing')")
+    await writeFile(file, 'isEnabled(\'missing\')')
     await expect(validateFeatureFlags({
       environment: 'prod',
       environments: { prod: [] },
