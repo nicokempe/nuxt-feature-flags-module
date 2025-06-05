@@ -13,6 +13,7 @@ export default defineNuxtConfig({
           name: 'checkoutUI',
           variants: ['v1', 'v2'],
           distribution: [0.5, 0.5],
+          persistence: 'state',
         },
         'newSystem',
         'betaButton',

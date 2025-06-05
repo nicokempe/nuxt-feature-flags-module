@@ -10,6 +10,8 @@ const updateElementVisibility = (el: HTMLElement, featureFlagValue: string) => {
 
   if (hasVariant) {
     const currentVariant = useFeatureVariant(flagName)
+    if (!currentVariant)
+      return el.style.display = 'none'
     shouldDisplay = isEnabled(flagName) && !!currentVariant && currentVariant === variant
   }
   else {

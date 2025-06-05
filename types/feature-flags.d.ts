@@ -4,8 +4,29 @@ export interface FeatureFlag {
   name: string
   activeFrom?: string
   activeUntil?: string
+
+  /**
+   * Optional array of variants for this feature flag.
+   * If provided, the flag will randomly select one of these variants.
+   * If not provided, the flag is treated as a simple boolean flag.
+   */
   variants?: string[]
+
+  /**
+   * If variants are defined, this array must match the length of `variants`.
+   * Each number represents the percentage chance of that variant being selected.
+   * For example, [0.5, 0.5] means each variant has a 50% chance.
+   * If not provided, defaults to equal distribution across variants.
+   */
   distribution?: number[]
+
+  /**
+   * How the flag's state is persisted:
+   * - 'state' → uses Nuxt's reactive state management
+   * - 'cookie' → stores in a cookie (accessible on both client and server)
+   * - 'local' → uses localStorage (only available on client)
+   */
+  persistence?: 'state' | 'cookie' | 'local'
 }
 
 export interface ValidationOptions {
