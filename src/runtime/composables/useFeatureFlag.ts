@@ -1,5 +1,6 @@
 import type { FeatureFlagsConfig, FeatureFlag, FeatureFlagInput } from '../../../types/feature-flags'
 import { isFlagActiveNow } from '../utils/isFlagActiveNow'
+import { useFeatureVariant } from './useFeatureVariant'
 import { useRuntimeConfig } from '#imports'
 
 /**
@@ -27,7 +28,24 @@ export const useFeatureFlag = () => {
   const isEnabled = (flagName: string): boolean => {
     for (const flag of flags) {
       if (typeof flag === 'string' && flag === flagName) return true
-      if (typeof flag === 'object' && flag.name === flagName && ((!flag?.activeFrom || !flag?.activeUntil) ? true : isFlagActiveNow(flag))) return true
+
+      const [name, variant] = flagName.split(':')
+      const hasVariant = !!variant
+      let enabled = false
+
+      if (typeof flag === 'object' && flag.name === (hasVariant ? name : flagName)) {
+        if (hasVariant) {
+          // If the flag has variants, we should check if the variant is active
+          const currentVariant = useFeatureVariant(name)
+          if (!currentVariant) return false
+          enabled = currentVariant === variant
+        }
+        else {
+          // If no variant is specified, just check if the flag is active
+          enabled = true
+        }
+        if ((!flag?.activeFrom || !flag?.activeUntil) ? enabled : isFlagActiveNow(flag)) return true
+      }
     }
     return false
   }
