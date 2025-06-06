@@ -1,6 +1,54 @@
 # Changelog
 
 
+## v2025.6.1
+
+[compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.5.5...v2025.6.1)
+
+### 🚀 Enhancements
+
+- **dx:** Add lint:fix script ([9b5af63](https://github.com/nicokempe/nuxt-feature-flags-module/commit/9b5af63))
+- **deps:** Add globby for file pattern matching ([3b0ee62](https://github.com/nicokempe/nuxt-feature-flags-module/commit/3b0ee62))
+- **playground:** Add non-existing feature flag examples and validation configuration ([27b5ad1](https://github.com/nicokempe/nuxt-feature-flags-module/commit/27b5ad1))
+- **validation:** Add configuration and `ready` hook ([0a85723](https://github.com/nicokempe/nuxt-feature-flags-module/commit/0a85723))
+- **validation:** Add feature flag validation utility ([6094c0b](https://github.com/nicokempe/nuxt-feature-flags-module/commit/6094c0b))
+
+### 🔥 Performance
+
+- **validation:** Read source files in parallel for faster validation ([c5af66a](https://github.com/nicokempe/nuxt-feature-flags-module/commit/c5af66a))
+
+### 💅 Refactors
+
+- **v-feature:** Simplify feature flag directive using composable ([#13](https://github.com/nicokempe/nuxt-feature-flags-module/pull/13))
+- **validation:** Remove redundant validation guards in module setup hook ([a4be7b6](https://github.com/nicokempe/nuxt-feature-flags-module/commit/a4be7b6))
+
+### 📖 Documentation
+
+- **security:** Add security policy ([f77d52b](https://github.com/nicokempe/nuxt-feature-flags-module/commit/f77d52b))
+- **readme:** Update planned features ([6d01dca](https://github.com/nicokempe/nuxt-feature-flags-module/commit/6d01dca))
+- **readme:** Add feature flag validation feature ([a6dde1e](https://github.com/nicokempe/nuxt-feature-flags-module/commit/a6dde1e))
+- **readme:** Fix formatting error ([5274363](https://github.com/nicokempe/nuxt-feature-flags-module/commit/5274363))
+
+### 🌊 Types
+
+- **server:** Improve typing for `isFeatureEnabled` utility ([318186e](https://github.com/nicokempe/nuxt-feature-flags-module/commit/318186e))
+- **config:** Add validation options to FeatureFlagsConfig ([8b85a96](https://github.com/nicokempe/nuxt-feature-flags-module/commit/8b85a96))
+- **runtime:** Enhance type annotations and add middleware imports ([c99e693](https://github.com/nicokempe/nuxt-feature-flags-module/commit/c99e693))
+
+### 🏡 Chore
+
+- **security:** Remove CodeQL advanced config ([13db209](https://github.com/nicokempe/nuxt-feature-flags-module/commit/13db209))
+- **playground:** Use warn as default validation for the playground ([57db299](https://github.com/nicokempe/nuxt-feature-flags-module/commit/57db299))
+
+### 🤖 CI
+
+- **security:** Add CodeQL workflow ([abcdb7e](https://github.com/nicokempe/nuxt-feature-flags-module/commit/abcdb7e))
+
+### ❤️ Contributors
+
+- Nico Kempe ([@nicokempe](https://github.com/nicokempe))
+- Maximilian Wiegmann ([@tylix](https://github.com/tylix))
+
 ## v2025.5.5
 
 [compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.5.4...v2025.5.5)
