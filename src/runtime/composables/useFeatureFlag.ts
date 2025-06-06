@@ -44,7 +44,9 @@ export const useFeatureFlag = () => {
           // If no variant is specified, just check if the flag is active
           enabled = true
         }
-        if ((!flag?.activeFrom || !flag?.activeUntil) ? enabled : isFlagActiveNow(flag)) return true
+        if (flag?.activeFrom || flag?.activeUntil)
+          return isFlagActiveNow(flag) && enabled
+        return enabled
       }
     }
     return false
