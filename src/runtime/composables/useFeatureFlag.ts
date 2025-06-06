@@ -21,6 +21,7 @@ export const useFeatureFlag = () => {
    * Supports:
    * - Static string flags
    * - Scheduled flags (with `activeFrom` and/or `activeUntil`)
+   * - Variants of flags (e.g., `flagName:variant`)
    *
    * @param flagName - The name of the feature flag to check.
    * @returns `true` if the feature is currently enabled, otherwise `false`.
