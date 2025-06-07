@@ -7,7 +7,7 @@ export default defineNuxtConfig({
 
   featureFlags: {
     environment: process.env.FEATURE_ENV || 'development',
-    environments: {
+    flagSets: {
       development: [
         {
           name: 'checkoutUI',

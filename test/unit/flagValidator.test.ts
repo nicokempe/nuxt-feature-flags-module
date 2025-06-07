@@ -21,7 +21,7 @@ describe('flagValidator', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     await validateUndeclaredFeatureFlags({
       environment: 'prod',
-      environments: { prod: [] },
+      flagSets: { prod: [] },
       validation: { mode: 'warn', includeGlobs: ['**/*.ts'], excludeGlobs: [] },
     }, dir)
     expect(warnSpy).toHaveBeenCalled()
@@ -33,7 +33,7 @@ describe('flagValidator', () => {
     await writeFile(file, 'isEnabled(\'missing\')')
     await expect(validateUndeclaredFeatureFlags({
       environment: 'prod',
-      environments: { prod: [] },
+      flagSets: { prod: [] },
       validation: { mode: 'error', includeGlobs: ['**/*.ts'], excludeGlobs: [] },
     }, dir)).rejects.toThrow()
   })

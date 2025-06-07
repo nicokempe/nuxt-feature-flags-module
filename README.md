@@ -43,7 +43,7 @@ export default defineNuxtConfig({
   modules: ['nuxt-feature-flags-module'],
   featureFlags: {
     environment: process.env.FEATURE_ENV || 'development',
-    environments: {
+    flagSets: {
       development: ['yourFeature1', 'yourFeature2'],
       staging: ['yourFeature1'],
       production: []

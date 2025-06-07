@@ -53,7 +53,7 @@ export interface FeatureFlagsConfig {
   /**
    * A record mapping each environment to an array of flags (string or { name, activeFrom, activeUntil }).
    */
-  environments: Record<string, FeatureFlagInput[]>
+  flagSets: Record<string, FeatureFlagInput[]>
 
   /**
    * Advanced validation options:

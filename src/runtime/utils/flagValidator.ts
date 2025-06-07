@@ -4,16 +4,16 @@ import type { FeatureFlagsConfig } from '../../../types/feature-flags'
  * Validates declared feature flags based on provided configuration.
  *
  * This function checks for invalid flag names (e.g., names containing colons)
- * across different environments and either logs a warning or throws an error
+ * across different flagSets and either logs a warning or throws an error
  * depending on the selected validation mode.
  *
- * @param options - Configuration object that includes environments and validation settings.
+ * @param options - Configuration object that includes flagSets and validation settings.
  *
  * The `options` parameter should have the following structure:
  *
  * ```ts
  * interface FeatureFlagsConfig {
- *   environments?: Record<string, (string | { name: string })[]>;
+ *   flagSets?: Record<string, (string | { name: string })[]>;
  *   validation?: {
  *     mode?: 'disabled' | 'warn' | 'error';
  *   };
@@ -30,14 +30,14 @@ export async function validateFeatureFlags(
     return // Skip validation entirely
   }
 
-  // 1. If no environments defined → skip
-  if (!options.environments || Object.keys(options.environments).length === 0) {
+  // 1. If no flagSets defined → skip
+  if (!options.flagSets || Object.keys(options.flagSets).length === 0) {
     return
   }
 
-  // 2. Load all declared flags from environments
+  // 2. Load all declared flags from flagSets
   const declaredFlags: Set<string> = new Set<string>()
-  for (const envFlags of Object.values(options.environments)) {
+  for (const envFlags of Object.values(options.flagSets)) {
     for (const item of envFlags || []) {
       const name: string = typeof item === 'string' ? item : item.name
       declaredFlags.add(name)
