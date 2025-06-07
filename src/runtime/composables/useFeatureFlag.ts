@@ -13,7 +13,7 @@ import { useRuntimeConfig } from '#imports'
 export const useFeatureFlag = () => {
   const config: FeatureFlagsConfig = useRuntimeConfig().public.featureFlags
   const env = config.environment
-  const flags: FeatureFlagInput[] = config.flags?.[env] || []
+  const flags: FeatureFlagInput[] = config.flagSets?.[env] || []
 
   /**
    * Checks whether a feature flag is currently enabled.

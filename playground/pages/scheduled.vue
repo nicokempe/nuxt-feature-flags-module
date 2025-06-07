@@ -79,7 +79,7 @@ const config = useRuntimeConfig().public.featureFlags
 
 const scheduledFlags = computed(() => {
   const env = config.environment
-  const flags = config.flags?.[env] || []
+  const flags = config.flagSets?.[env] || []
 
   return flags.filter((flag): flag is { name: string, activeFrom?: string, activeUntil?: string } => {
     return typeof flag === 'object' && typeof flag.name === 'string'

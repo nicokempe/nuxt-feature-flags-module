@@ -19,7 +19,7 @@ import type { FeatureFlagsConfig } from '../../../types/feature-flags'
  *
  * For each missing flag, it includes file path, line, and column in the warning/error.
  *
- * @param options - Feature flag configuration (including `flags` and `validation`).
+ * @param options - Feature flag configuration (including `flagSets` and `validation`).
  * @param rootDir  - Absolute path to the Nuxt project root directory.
  */
 export async function validateFeatureFlags(
@@ -33,8 +33,8 @@ export async function validateFeatureFlags(
     return // Skip validation entirely
   }
 
-  // 1. If no flags defined → skip
-  if (!options.flags || Object.keys(options.flags).length === 0) {
+  // 1. If no flagSets defined → skip
+  if (!options.flagSets || Object.keys(options.flagSets).length === 0) {
     return
   }
 
@@ -110,9 +110,9 @@ export async function validateFeatureFlags(
     }
   }
 
-  // 7. Build Set of all declared flags (across all flags in all environments)
+  // 7. Build Set of all declared flags (across all flags in all flagSets)
   const declaredFlags: Set<string> = new Set<string>()
-  for (const envFlags of Object.values(options.flags)) {
+  for (const envFlags of Object.values(options.flagSets)) {
     for (const item of envFlags || []) {
       const name: string = typeof item === 'string' ? item : item.name
       declaredFlags.add(name)
