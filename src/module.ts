@@ -19,7 +19,7 @@ export default defineNuxtModule<FeatureFlagsConfig>({
     environment: 'production',
 
     // No flags declared by default
-    environments: {},
+    flags: {},
 
     validation: {
       mode: 'warn', // can be 'disabled' | 'warn' | 'error'
@@ -39,6 +39,12 @@ export default defineNuxtModule<FeatureFlagsConfig>({
 
     // Run validation at `ready` (after Nuxt merges config)
     nuxt.hook('ready', async (): Promise<void> => {
+      if ('environments' in (options as FeatureFlagsConfig)) {
+        throw new Error(
+          '`featureFlags.environments` has been renamed to `featureFlags.flags`. '
+          + 'See release notes for v2025.6.2 for migration details.',
+        )
+      }
       await validateFeatureFlags(options, nuxt.options.rootDir)
     })
   },

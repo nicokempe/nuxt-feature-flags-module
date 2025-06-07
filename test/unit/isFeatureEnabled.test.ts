@@ -16,7 +16,7 @@ beforeEach(() => {
   runtimeConfig = {
     featureFlags: {
       environment: 'prod',
-      environments: {
+      flags: {
         prod: [],
       },
     },
@@ -25,7 +25,7 @@ beforeEach(() => {
 
 describe('isFeatureEnabled', () => {
   it('checks simple string flags', () => {
-    runtimeConfig.featureFlags.environments.prod = ['flagA']
+    runtimeConfig.featureFlags.flags.prod = ['flagA']
     expect(isFeatureEnabled('flagA')).toBe(true)
     expect(isFeatureEnabled('unknown')).toBe(false)
   })
@@ -35,7 +35,7 @@ describe('isFeatureEnabled', () => {
     vi.useFakeTimers()
     vi.setSystemTime(now)
 
-    runtimeConfig.featureFlags.environments.prod = [
+    runtimeConfig.featureFlags.flags.prod = [
       { name: 'scheduled', activeUntil: '2024-07-01T00:00:00Z' },
     ]
 
@@ -48,7 +48,7 @@ describe('isFeatureEnabled', () => {
     vi.useFakeTimers()
     vi.setSystemTime(now)
 
-    runtimeConfig.featureFlags.environments.prod = [
+    runtimeConfig.featureFlags.flags.prod = [
       { name: 'scheduled', activeUntil: '2024-07-01T00:00:00Z' },
     ]
 
