@@ -19,7 +19,7 @@ beforeEach(() => {
     public: {
       featureFlags: {
         environment: 'prod',
-        flags: {
+        flagSets: {
           prod: [],
         },
       },
@@ -29,7 +29,7 @@ beforeEach(() => {
 
 describe('useFeatureFlag', () => {
   it('detects static flags', () => {
-    runtimeConfig.public.featureFlags.flags.prod = ['flagA']
+    runtimeConfig.public.featureFlags.flagSets.prod = ['flagA']
     const { isEnabled } = useFeatureFlag()
     expect(isEnabled('flagA')).toBe(true)
     expect(isEnabled('unknown')).toBe(false)
@@ -40,7 +40,7 @@ describe('useFeatureFlag', () => {
     vi.useFakeTimers()
     vi.setSystemTime(now)
 
-    runtimeConfig.public.featureFlags.flags.prod = [
+    runtimeConfig.public.featureFlags.flagSets.prod = [
       { name: 'scheduled', activeFrom: '2024-05-01T00:00:00Z', activeUntil: '2024-07-01T00:00:00Z' },
     ]
 
@@ -56,7 +56,7 @@ describe('useFeatureFlag', () => {
     vi.useFakeTimers()
     vi.setSystemTime(now)
 
-    runtimeConfig.public.featureFlags.flags.prod = [
+    runtimeConfig.public.featureFlags.flagSets.prod = [
       { name: 'scheduled', activeFrom: '2024-05-01T00:00:00Z' },
     ]
 
