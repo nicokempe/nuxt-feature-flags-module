@@ -7,6 +7,7 @@ import {
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { FeatureFlagsConfig } from '../types/feature-flags'
+import { validateUndeclaredFeatureFlags } from './runtime/utils/undeclaredValidator'
 import { validateFeatureFlags } from './runtime/utils/flagValidator'
 
 export default defineNuxtModule<FeatureFlagsConfig>({
@@ -45,7 +46,8 @@ export default defineNuxtModule<FeatureFlagsConfig>({
           + 'See release notes for v2025.6.2 for migration details.',
         )
       }
-      await validateFeatureFlags(options, nuxt.options.rootDir)
+      await validateUndeclaredFeatureFlags(options, nuxt.options.rootDir)
+      await validateFeatureFlags(options)
     })
   },
 })
