@@ -34,7 +34,7 @@ export async function validateUndeclaredFeatureFlags(
   }
 
   // 1. If no environments defined → skip
-  if (!options.environments || Object.keys(options.environments).length === 0) {
+  if (!options.flagSets || Object.keys(options.flagSets).length === 0) {
     return
   }
 
@@ -112,7 +112,7 @@ export async function validateUndeclaredFeatureFlags(
 
   // 7. Build Set of all declared flags (across all environments)
   const declaredFlags: Set<string> = new Set<string>()
-  for (const envFlags of Object.values(options.environments)) {
+  for (const envFlags of Object.values(options.flagSets)) {
     for (const item of envFlags || []) {
       const name: string = typeof item === 'string' ? item : item.name
       declaredFlags.add(name)
