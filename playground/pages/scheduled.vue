@@ -83,6 +83,7 @@ const scheduledFlags = computed(() => {
 
   return flags.filter((flag): flag is { name: string, activeFrom?: string, activeUntil?: string } => {
     return typeof flag === 'object' && typeof flag.name === 'string'
+      && (typeof flag.activeFrom === 'string' || typeof flag.activeUntil === 'string')
   })
 })
 
