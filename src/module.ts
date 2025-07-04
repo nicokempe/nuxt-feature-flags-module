@@ -3,8 +3,9 @@ import {
   createResolver,
   addPlugin,
   addImportsDir,
-  type Resolver,
+
 } from '@nuxt/kit'
+import type { Resolver } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { FeatureFlagsConfig } from '../types/feature-flags'
 import { validateFeatureFlags } from './runtime/utils/flagValidator'
