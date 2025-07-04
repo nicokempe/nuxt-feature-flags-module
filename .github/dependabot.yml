@@ -9,7 +9,7 @@ updates:
     assignees:
       - "nicokempe"
     commit-message:
-      prefix: "[pnpm] "
+      prefix: "chore(pnpm): "
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -19,4 +19,4 @@ updates:
     assignees:
       - "nicokempe"
     commit-message:
-      prefix: "[actions] "
+      prefix: "chore(actions): "
