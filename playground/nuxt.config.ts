@@ -9,6 +9,12 @@ export default defineNuxtConfig({
     environment: process.env.FEATURE_ENV || 'development',
     flagSets: {
       development: [
+        {
+          name: 'checkoutUI',
+          variants: ['v1', 'v2'],
+          distribution: [0.5, 0.5],
+          persistence: 'state',
+        },
         'newSystem',
         'betaButton',
         {
