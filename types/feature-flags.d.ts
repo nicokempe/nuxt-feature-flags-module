@@ -54,4 +54,10 @@ declare module 'nuxt/schema' {
   interface PublicRuntimeConfig {
     featureFlags: FeatureFlagsConfig
   }
+
+  interface PageMeta {
+    featureFlag?: string
+    featureFallback?: string
+    featureNotifyOnBlock?: boolean
+  }
 }
