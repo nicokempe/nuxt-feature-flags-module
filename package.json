@@ -49,7 +49,8 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "refresh": "rm -rf pnpm-lock.yaml .nuxt/ dist/ node_modules/ playground/.nuxt/ playground/.output/ playground/node_modules/ && pnpm install && nuxi prepare && pnpm run lint:fix && pnpm run test && pnpm run prepack && pnpm run dev"
   },
   "dependencies": {
     "@nuxt/kit": "^3.17.3"
