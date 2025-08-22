@@ -75,6 +75,22 @@
           Redirects to <code>/404</code> unless <code>'newSystem'</code> is active.
         </p>
       </div>
+
+      <!-- Hierarchical Flags Demo -->
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/10 shadow-lg">
+        <h2 class="text-lg font-semibold mb-2 text-emerald-300">
+          🌳 Hierarchical Flags
+        </h2>
+        <button
+          class="rounded-lg bg-neutral-800 hover:opacity-80 text-white py-2 px-4 transition ease-in-out duration-200 cursor-pointer"
+          @click="navigateToHierarchical"
+        >
+          View Demo
+        </button>
+        <p class="text-neutral-400 text-sm mt-2">
+          Demonstrates grouped flags enabled via wildcard patterns.
+        </p>
+      </div>
     </div>
 
     <!-- Non-existing feature flag use to trigger strict mode -->
@@ -127,6 +143,10 @@ function navigateToProtected() {
   else {
     navigateTo('/404')
   }
+}
+
+function navigateToHierarchical() {
+  navigateTo('/hierarchical')
 }
 
 useSeoMeta({
