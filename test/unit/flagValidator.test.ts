@@ -2,7 +2,7 @@ import { mkdtemp, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { validateFeatureFlags } from '../../src/runtime/utils/flagValidator'
+import { validateUndeclaredFeatureFlags } from '../../src/runtime/utils/undeclaredValidator'
 
 let dir: string
 
@@ -19,7 +19,7 @@ describe('flagValidator', () => {
     const file = join(dir, 'test.ts')
     await writeFile(file, 'isEnabled(\'missing\')')
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    await validateFeatureFlags({
+    await validateUndeclaredFeatureFlags({
       environment: 'prod',
       flagSets: { prod: [] },
       validation: { mode: 'warn', includeGlobs: ['**/*.ts'], excludeGlobs: [] },
@@ -31,7 +31,7 @@ describe('flagValidator', () => {
   it('throws on missing flags in error mode', async () => {
     const file = join(dir, 'test2.ts')
     await writeFile(file, 'isEnabled(\'missing\')')
-    await expect(validateFeatureFlags({
+    await expect(validateUndeclaredFeatureFlags({
       environment: 'prod',
       flagSets: { prod: [] },
       validation: { mode: 'error', includeGlobs: ['**/*.ts'], excludeGlobs: [] },
