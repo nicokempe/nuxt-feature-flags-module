@@ -3,6 +3,7 @@ import {
   createResolver,
   addPlugin,
   addImportsDir,
+  addRouteMiddleware,
 
 } from '@nuxt/kit'
 import type { Resolver } from '@nuxt/kit'
@@ -37,6 +38,11 @@ export default defineNuxtModule<FeatureFlagsConfig>({
     addImportsDir(resolver.resolve('runtime/composables'))
     addPlugin(resolver.resolve('runtime/plugin'))
     addImportsDir(resolver.resolve('runtime/middleware'))
+    addRouteMiddleware({
+      name: 'feature-flag',
+      path: resolver.resolve('runtime/middleware/featureFlag'),
+      global: true,
+    })
 
     // Run validation at `ready` (after Nuxt merges config)
     nuxt.hook('ready', async (): Promise<void> => {

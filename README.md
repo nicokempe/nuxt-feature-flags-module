@@ -81,6 +81,19 @@ export default defineEventHandler((event) => {
 })
 ```
 
+
+Or guard entire pages via `definePageMeta`:
+
+```html
+<script lang="ts">
+definePageMeta({
+  featureFlag: 'training-portal',
+  featureFallback: '/404',
+  featureNotifyOnBlock: true,
+})
+</script>
+```
+
 ## Contribution
 
 <details>
