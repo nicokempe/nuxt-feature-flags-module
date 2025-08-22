@@ -59,6 +59,12 @@ feat(auth): add email otp reauthentication flow
 - Run linting and tests before opening a PR.
 - Keep changes small and focused.
 
+## Releases
+
+- Ensure you are on the `main` branch with a clean working tree and are authenticated with npm.
+- Run `pnpm run release` to lint, test, build the module, update the changelog with `changelogen`, publish to npm, and push git tags.
+- Verify the release on npm and that tags were pushed upstream.
+
 ## References
 
 - [Conventional Commits](https://www.conventionalcommits.org/)
