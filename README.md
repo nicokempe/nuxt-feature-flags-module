@@ -5,7 +5,7 @@
 [![npm downloads 18m][npm-downloads-18m-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 
-Lightweight, environment-based feature flag system for Nuxt 3 — made for developers who need dynamic feature control in routes, components, and APIs.
+Lightweight, environment-based feature flag system for Nuxt - made for developers who need dynamic feature control in routes, components, and APIs.
 
 ## Features
 
