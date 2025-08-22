@@ -1,26 +1,24 @@
 /**
  * Checks whether a feature flag name matches a given pattern.
  *
- * Both `pattern` and `value` support hierarchical segments separated by `/`
- * and may end in a `*` wildcard to match any descendant nodes.
- * Either side may be a wildcard pattern, enabling group queries such as
- * `solutions/*` or `*` (root).
+ * Both `pattern` and `value` support hierarchical segments separated by `/`.
+ * Only the `pattern` may end in a trailing `*` to match any descendant nodes
+ * (e.g. `solutions/*`). The `value` is always treated as a concrete flag name.
  *
  * @param pattern - The flag or wildcard pattern to test against.
- * @param value - The concrete flag name or pattern being evaluated.
+ * @param value - The concrete flag name being evaluated.
  * @returns `true` if the pattern matches the value, otherwise `false`.
  */
 export const matchFlag = (pattern: string, value: string): boolean => {
   if (pattern === '*' || value === '*') return true
 
   const patternIsWildcard: boolean = pattern.endsWith('/*')
-  const valueIsWildcard: boolean = value.endsWith('/*')
 
   const patternBase: string = patternIsWildcard ? pattern.slice(0, -1) : pattern
-  const valueBase: string = valueIsWildcard ? value.slice(0, -1) : value
 
-  if (patternIsWildcard && value.startsWith(patternBase)) return true
-  if (valueIsWildcard && pattern.startsWith(valueBase)) return true
+  if (patternIsWildcard) {
+    return value.startsWith(patternBase)
+  }
 
   return pattern === value
 }

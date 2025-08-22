@@ -71,10 +71,11 @@ describe('useFeatureFlag', (): void => {
     runtimeConfig.public.featureFlags.flagSets.prod = ['solutions/*']
     let utils = useFeatureFlag()
     expect(utils.isEnabled('solutions/company-portal/addons/sales')).toBe(true)
+    expect(utils.isEnabled('solutions/*')).toBe(true)
 
     runtimeConfig.public.featureFlags.flagSets.prod = ['solutions/company-portal/addons/sales']
     utils = useFeatureFlag()
-    expect(utils.isEnabled('solutions/*')).toBe(true)
+    expect(utils.isEnabled('solutions/*')).toBe(false)
 
     runtimeConfig.public.featureFlags.flagSets.prod = ['*']
     utils = useFeatureFlag()

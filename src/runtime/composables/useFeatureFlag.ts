@@ -21,9 +21,13 @@ export const useFeatureFlag = () => {
    * Supports:
    * - Static string flags
    * - Scheduled flags (with `activeFrom` and/or `activeUntil`)
-   * - Hierarchical paths and `*` wildcards (e.g. `solutions/*`)
+   * - Hierarchical paths and `*` wildcards declared in the flag set
    *
-   * @param flagName - The name or wildcard pattern of the feature flag to check.
+   * Wildcard queries only return `true` if the wildcard itself is enabled
+   * (e.g. checking `solutions/*` requires that `solutions/*` exists in the
+   * current flag set).
+   *
+   * @param flagName - The name of the feature flag to check.
    * @returns `true` if the feature is currently enabled, otherwise `false`.
    */
   const isEnabled = (flagName: string): boolean => {
