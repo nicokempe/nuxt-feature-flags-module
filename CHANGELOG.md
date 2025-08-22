@@ -1,6 +1,62 @@
 # Changelog
 
 
+## v2025.6.2
+
+[compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.6.1...v2025.6.2)
+
+### 🚀 Enhancements
+
+- **middleware:** Add page-level feature flag protection via definePageMeta ([#77](https://github.com/nicokempe/nuxt-feature-flags-module/pull/77))
+
+### 🩹 Fixes
+
+- **package:** Update Git repository url from npm fix ([1b6e6f4](https://github.com/nicokempe/nuxt-feature-flags-module/commit/1b6e6f4))
+
+### 💅 Refactors
+
+- **config:** Rename `environments` to `flags` in feature flag configuration ([d298505](https://github.com/nicokempe/nuxt-feature-flags-module/commit/d298505))
+- **config:** Rename `flags` to `flagSets` in feature flag configuration ([14ceeaa](https://github.com/nicokempe/nuxt-feature-flags-module/commit/14ceeaa))
+
+### 📖 Documentation
+
+- **dx:** Add update labels for dependabot pull requests ([98eea2e](https://github.com/nicokempe/nuxt-feature-flags-module/commit/98eea2e))
+- **readme:** Add total downloads (18m) ([ca78c46](https://github.com/nicokempe/nuxt-feature-flags-module/commit/ca78c46))
+- **nuxt:** Remove nuxt version specification ([9cab437](https://github.com/nicokempe/nuxt-feature-flags-module/commit/9cab437))
+- **conduct:** Add code of conduct ([3898f7f](https://github.com/nicokempe/nuxt-feature-flags-module/commit/3898f7f))
+- **contributing:** Add contribution guide ([732da43](https://github.com/nicokempe/nuxt-feature-flags-module/commit/732da43))
+- **contributing:** Add note on how to bump the project version ([1a52568](https://github.com/nicokempe/nuxt-feature-flags-module/commit/1a52568))
+- **features:** Update examples in README ([cef560f](https://github.com/nicokempe/nuxt-feature-flags-module/commit/cef560f))
+
+### 🏡 Chore
+
+- **pnpm:** Update packages ([c7c80d8](https://github.com/nicokempe/nuxt-feature-flags-module/commit/c7c80d8))
+- **pnpm:** Bump changelogen from 0.6.1 to 0.6.2 ([#49](https://github.com/nicokempe/nuxt-feature-flags-module/pull/49))
+- **pnpm:** Bump @types/node from 24.0.10 to 24.0.13 ([#51](https://github.com/nicokempe/nuxt-feature-flags-module/pull/51))
+- **pnpm:** Bump tmp from 0.2.3 to 0.2.4 in the npm_and_yarn group ([#73](https://github.com/nicokempe/nuxt-feature-flags-module/pull/73))
+- **pnpm:** Update packages ([c539f2c](https://github.com/nicokempe/nuxt-feature-flags-module/commit/c539f2c))
+- **actions:** Bump actions/checkout from 4 to 5 ([#74](https://github.com/nicokempe/nuxt-feature-flags-module/pull/74))
+- **pnpm:** Update packages ([a45e3de](https://github.com/nicokempe/nuxt-feature-flags-module/commit/a45e3de))
+- **pnpm:** Update packages ([29623ca](https://github.com/nicokempe/nuxt-feature-flags-module/commit/29623ca))
+- **config:** Add missing compatibility dates ([b543651](https://github.com/nicokempe/nuxt-feature-flags-module/commit/b543651))
+
+### ✅ Tests
+
+- **flagValidator:** Add unit tests for feature flag validation ([4568e74](https://github.com/nicokempe/nuxt-feature-flags-module/commit/4568e74))
+- **isFeatureEnabled:** Add unit tests for feature flag evaluation ([effb7f5](https://github.com/nicokempe/nuxt-feature-flags-module/commit/effb7f5))
+- **isFlagActiveNow:** Add unit tests for flag activation logic ([ad8c6b3](https://github.com/nicokempe/nuxt-feature-flags-module/commit/ad8c6b3))
+- **useFeatureFlag:** Add unit tests for feature flag detection and scheduling ([ee72e7e](https://github.com/nicokempe/nuxt-feature-flags-module/commit/ee72e7e))
+
+### 🤖 CI
+
+- Add `workflow_dispatch` trigger ([9c636be](https://github.com/nicokempe/nuxt-feature-flags-module/commit/9c636be))
+- **security:** Restrict GITHUB_TOKEN permissions to contents:read ([183430a](https://github.com/nicokempe/nuxt-feature-flags-module/commit/183430a))
+- **dependabot:** Update commit message prefixes for pnpm and actions ([099fae1](https://github.com/nicokempe/nuxt-feature-flags-module/commit/099fae1))
+
+### ❤️ Contributors
+
+- Nico Kempe ([@nicokempe](https://github.com/nicokempe))
+
 ## v2025.6.1
 
 [compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.5.5...v2025.6.1)
