@@ -1,16 +1,16 @@
 import fs from 'node:fs'
 
-const packageJsonPath: URL = new URL('../package.json', import.meta.url)
+const packageJsonPath = new URL('../package.json', import.meta.url)
 const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
 
-const now: Date = new Date()
-const currentYear: number = now.getFullYear()
-const currentMonth: number = now.getMonth() + 1 // 0-based → 1–12
+const now = new Date()
+const currentYear = now.getFullYear()
+const currentMonth = now.getMonth() + 1 // 0-based → 1–12
 
 const [yearStr, monthStr, versionStr] = pkg.version.split('.')
-const year: number = Number(yearStr)
-const month: number = Number(monthStr)
-let version: number = Number(versionStr)
+const year = Number(yearStr)
+const month = Number(monthStr)
+let version = Number(versionStr)
 
 if (year === currentYear && month === currentMonth) {
   // Same year & month → bump patch
@@ -21,7 +21,7 @@ else {
   version = 0
 }
 
-const newVersion: string = `${currentYear}.${currentMonth}.${version}`
+const newVersion = `${currentYear}.${currentMonth}.${version}`
 pkg.version = newVersion
 
 fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n')
