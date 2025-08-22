@@ -14,7 +14,7 @@ vi.mock('#imports', () => ({
   useRuntimeConfig: () => runtimeConfig,
 }))
 
-beforeEach(() => {
+beforeEach((): void => {
   runtimeConfig = {
     public: {
       featureFlags: {
@@ -27,16 +27,16 @@ beforeEach(() => {
   }
 })
 
-describe('useFeatureFlag', () => {
-  it('detects static flags', () => {
+describe('useFeatureFlag', (): void => {
+  it('detects static flags', (): void => {
     runtimeConfig.public.featureFlags.flagSets.prod = ['flagA']
     const { isEnabled } = useFeatureFlag()
     expect(isEnabled('flagA')).toBe(true)
     expect(isEnabled('unknown')).toBe(false)
   })
 
-  it('handles scheduled flags', () => {
-    const now = new Date('2024-06-01T12:00:00Z')
+  it('handles scheduled flags', (): void => {
+    const now: Date = new Date('2024-06-01T12:00:00Z')
     vi.useFakeTimers()
     vi.setSystemTime(now)
 
@@ -51,8 +51,8 @@ describe('useFeatureFlag', () => {
     vi.useRealTimers()
   })
 
-  it('filters out inactive scheduled flags', () => {
-    const now = new Date('2024-04-01T12:00:00Z')
+  it('filters out inactive scheduled flags', (): void => {
+    const now: Date = new Date('2024-04-01T12:00:00Z')
     vi.useFakeTimers()
     vi.setSystemTime(now)
 
@@ -65,5 +65,19 @@ describe('useFeatureFlag', () => {
     expect(listFlags()).toEqual([])
 
     vi.useRealTimers()
+  })
+
+  it('supports hierarchical wildcard patterns', (): void => {
+    runtimeConfig.public.featureFlags.flagSets.prod = ['solutions/*']
+    let utils = useFeatureFlag()
+    expect(utils.isEnabled('solutions/company-portal/addons/sales')).toBe(true)
+
+    runtimeConfig.public.featureFlags.flagSets.prod = ['solutions/company-portal/addons/sales']
+    utils = useFeatureFlag()
+    expect(utils.isEnabled('solutions/*')).toBe(true)
+
+    runtimeConfig.public.featureFlags.flagSets.prod = ['*']
+    utils = useFeatureFlag()
+    expect(utils.isEnabled('whatever')).toBe(true)
   })
 })
