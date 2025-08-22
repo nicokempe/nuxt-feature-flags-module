@@ -45,7 +45,7 @@ export default defineNuxtConfig({
   featureFlags: {
     environment: process.env.FEATURE_ENV || 'development',
     flagSets: {
-      development: ['yourFeature1', 'yourFeature2'],
+      development: ['yourFeature1', 'yourFeature2', 'yourFeature3', 'yourFeature4'],
       staging: ['yourFeature1'],
       production: []
     }
@@ -57,24 +57,26 @@ Use in your app:
 
 ```html
 <template>
-  <button v-feature="'yourFeature2'">Try Feature 2</button>
+  <button v-feature="'yourFeature1'">Try Feature 1</button>
 </template>
 ```
 
 Or via composable:
 ```ts
-const { isEnabled } = useFeatureFlag()
+const { isEnabled, listFlags } = useFeatureFlag()
 
-if (isEnabled('yourFeature1')) {
+if (isEnabled('yourFeature2')) {
   // do something
 }
+
+console.log(listFlags()) // returns ['yourFeature1', 'yourFeature2', 'yourFeature3', 'yourFeature4']
 ```
 
 Or in your server API:
 ```ts
 export default defineEventHandler((event) => {
-  if (!isFeatureEnabled('yourFeature2', event)) {
-    return sendError(event, createError({ statusCode: 403, message: 'Feature 2 is disabled' }))
+  if (!isFeatureEnabled('yourFeature3', event)) {
+    return sendError(event, createError({ statusCode: 403, message: 'Feature 3 is disabled' }))
   }
 
   return { message: 'Feature unlocked 🎉' }
@@ -87,7 +89,7 @@ Or guard entire pages via `definePageMeta`:
 ```html
 <script lang="ts">
 definePageMeta({
-  featureFlag: 'training-portal',
+  featureFlag: 'yourFeature4',
   featureFallback: '/404',
   featureNotifyOnBlock: true,
 })
