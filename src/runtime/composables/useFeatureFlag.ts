@@ -1,5 +1,6 @@
 import type { FeatureFlagsConfig, FeatureFlag, FeatureFlagInput } from '../../../types/feature-flags'
 import { isFlagActiveNow } from '../utils/isFlagActiveNow'
+import { matchFlag } from '../utils/matchFlag'
 import { useRuntimeConfig } from '#imports'
 
 /**
@@ -12,7 +13,7 @@ import { useRuntimeConfig } from '#imports'
  */
 export const useFeatureFlag = () => {
   const config: FeatureFlagsConfig = useRuntimeConfig().public.featureFlags
-  const env = config.environment
+  const env: string = config.environment
   const flags: FeatureFlagInput[] = config.flagSets?.[env] || []
 
   /**
@@ -26,8 +27,14 @@ export const useFeatureFlag = () => {
    */
   const isEnabled = (flagName: string): boolean => {
     for (const flag of flags) {
-      if (typeof flag === 'string' && flag === flagName) return true
-      if (typeof flag === 'object' && flag.name === flagName && isFlagActiveNow(flag)) return true
+      const name: string = typeof flag === 'string' ? flag : flag.name
+      if (!matchFlag(name, flagName)) continue
+      if (typeof flag === 'object') {
+        if (isFlagActiveNow(flag)) return true
+      }
+      else {
+        return true
+      }
     }
     return false
   }
