@@ -15,17 +15,17 @@ Lightweight, environment-based feature flag system for Nuxt - made for developer
 - 🎯 Roll out features to internal QA teams without branching or releases
 - 📆 Schedule feature launches for specific environments or timeframes
 - 🕵️‍♀️ Detect undeclared feature flags at build time with configurable validation and precise file context
+- 🌳 Group flags with hierarchical names and enable bundles via wildcard (`*`) patterns
 
 ## Planned Features
 
+- 📊 A/B testing support for feature flags
+- 💡 Flag descriptions / metadata for better documentation, DevTools tooltips, or internal usage notes
 - 🧩 Nuxt DevTools integration with a Feature Flag Explorer and Environment Switcher
 - 🔄 Dynamic feature flag updates without server restarts through a remote config service
-- 📊 A/B testing support for feature flags
-- 📈 Analytics for feature flag usage
 - 🧍‍♂️ Show features only for specific users (e.g., staff-only UIs, admin panels etc.)
-- 🧬 Environment inheritance which lets environments inherit feature flags from others
-- 💡 Flag descriptions / metadata for better documentation, DevTools tooltips, or internal usage notes
 - 🛠 Programmatic overrides to toggle or override feature flags dynamically at runtime (e.g., per user or session)
+- 📈 Analytics for feature flag usage and user feedback collection
 
 ## Quick Setup
 
@@ -52,6 +52,49 @@ export default defineNuxtConfig({
   }
 })
 ```
+
+### Hierarchical & Wildcard Flags
+
+Feature flags can be organized with `/`-separated paths and enabled in bulk using `*`.
+
+```ts
+export default defineNuxtConfig({
+  modules: ['nuxt-feature-flags-module'],
+  featureFlags: {
+    environment: process.env.FEATURE_ENV || 'development',
+    flagSets: {
+      development: [
+        'solutions/*',
+        'staging/*',
+        'internal/experimental/ui'
+      ],
+      staging: [
+        'solutions/company-portal/addons/sales',
+        'solutions/company-portal/addons/marketing',
+        'internal/experimental/ui'
+      ],
+      production: [
+        'solutions/company-portal/addons/sales'
+      ]
+    }
+  }
+})
+```
+
+```ts
+const { isEnabled } = useFeatureFlag()
+
+if (isEnabled('solutions/company-portal/addons/sales')) {
+  // sales addon enabled
+}
+
+if (isEnabled('solutions/*')) {
+  // any solution-related flag is active
+}
+```
+
+> [!CAUTION]  
+> Using `*` enables every flag and the validator will emit a warning. Reserve it for debugging scenarios.
 
 Use in your app:
 

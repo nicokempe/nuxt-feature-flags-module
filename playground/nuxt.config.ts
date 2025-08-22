@@ -33,9 +33,16 @@ export default defineNuxtConfig({
           activeFrom: '2000-01-01T00:00:00Z',
           activeUntil: '2001-01-01T00:00:00Z',
         },
+        'solutions/*',
+        'internal/experimental/ui',
       ],
-      staging: ['newSystem'],
-      production: [],
+      staging: [
+        'newSystem',
+        'solutions/company-portal/addons/sales',
+        'solutions/company-portal/addons/marketing',
+        'internal/experimental/ui',
+      ],
+      production: ['solutions/company-portal/addons/sales'],
     },
     validation: {
       mode: 'warn',

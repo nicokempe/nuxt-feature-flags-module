@@ -2,10 +2,12 @@ import { readFile } from 'node:fs/promises'
 import { globby } from 'globby'
 import { resolve as resolvePath } from 'pathe'
 import type { FeatureFlagsConfig } from '../../../types/feature-flags'
+import { matchFlag } from './matchFlag'
 
 /**
  * Validates that all feature flags used in the source code are declared
  * in at least one environment of the FeatureFlagsConfig.
+ * Handles hierarchical flag paths and `*` wildcards, allowing patterns such as `solutions/*` in both declarations and usage.
  *
  * Supports customizing:
  * - `validation.mode`     (disabled | warn | error)
@@ -56,20 +58,20 @@ export async function validateFeatureFlags(
   // 4. Prepare regex patterns (allow letters, digits, underscores, hyphens, dots)
   const regexes: RegExp[] = [
     // Matches: v-feature="flagName", v-feature='flagName', v-feature="'flagName'"
-    /v-feature\s*=\s*["']\s*'?([\w.-]+)'?\s*["']/g,
+    /v-feature\s*=\s*["']\s*'?([\w./*-]+)'?\s*["']/g,
 
     // Matches: isEnabled('flagName') or isEnabled("flagName")
-    /\bisEnabled\(\s*['"]([\w.-]+)['"]\s*\)/g,
+    /\bisEnabled\(\s*['"]([\w./*-]+)['"]\s*\)/g,
 
     // Matches: defineFeatureFlagMiddleware('flagName') or defineFeatureFlagMiddleware("flagName")
-    /\bdefineFeatureFlagMiddleware\(\s*['"]([\w.-]+)['"]\s*\)/g,
+    /\bdefineFeatureFlagMiddleware\(\s*['"]([\w./*-]+)['"]\s*\)/g,
   ]
 
   // 5. Read & scan each file for literal flag usage
   interface FileContext { path: string, content: string }
   const contexts: FileContext[] = []
 
-  await Promise.all(allFiles.map(async (relativePath) => {
+  await Promise.all(allFiles.map(async (relativePath): Promise<void> => {
     const absolutePath: string = resolvePath(rootDir, relativePath)
     try {
       const content: string = await readFile(absolutePath, 'utf-8')
@@ -91,7 +93,11 @@ export async function validateFeatureFlags(
     for (const regex of regexes) {
       let match: RegExpExecArray | null
       while ((match = regex.exec(content)) !== null) {
-        const flagName: string = match[1] // capture group 1 is always the flag
+        const captured: string | undefined = match[1]
+        if (typeof captured !== 'string' || captured.length === 0) {
+          continue
+        }
+        const flagName: string = captured // capture group 1 is always the flag
         // Calculate line/column from match.index
         const beforeMatch: string = content.slice(0, match.index)
         const lineNumber: number = beforeMatch.split('\n').length
@@ -111,17 +117,21 @@ export async function validateFeatureFlags(
   }
 
   // 7. Build Set of all declared flags (across all flags in all flagSets)
-  const declaredFlags: Set<string> = new Set<string>()
-  for (const envFlags of Object.values(options.flagSets)) {
+  const declaredFlags: string[] = []
+  for (const [env, envFlags] of Object.entries(options.flagSets)) {
     for (const item of envFlags || []) {
       const name: string = typeof item === 'string' ? item : item.name
-      declaredFlags.add(name)
+      declaredFlags.push(name)
+      if (name === '*') {
+        console.warn(`[nuxt-feature-flags] Environment "${env}" uses "*" which enables all flags and should only be used for debugging.`)
+      }
     }
   }
 
   // 8. Compare used vs. declared, emit warnings/errors with context
   for (const info of usedFlagsInfo) {
-    if (!declaredFlags.has(info.name)) {
+    const declared: boolean = declaredFlags.some(pattern => matchFlag(pattern, info.name))
+    if (!declared) {
       const location: string = `${info.file}:${info.line}:${info.column}`
       const message: string
         = `[nuxt-feature-flags] ${location} → Flag "${info.name}" `

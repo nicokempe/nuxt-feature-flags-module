@@ -1,13 +1,18 @@
 import type { H3Event } from 'h3'
 import { isFlagActiveNow } from '../utils/isFlagActiveNow'
+import { matchFlag } from '../utils/matchFlag'
 import { useRuntimeConfig } from '#imports'
 import type { FeatureFlagInput, FeatureFlagsConfig } from '~/types/feature-flags'
 
 /**
  * Server-side utility to check if a feature flag is currently enabled.
- * Supports both string and scheduled flags.
+ * Supports string flags, scheduled flags, and wildcard groups declared in the
+ * flag set (e.g. `solutions/*`).
  *
  * Intended for use in server routes (`server/api/**`) or middleware.
+ *
+ * Wildcard queries only return `true` if the wildcard itself is enabled in the
+ * active flag set.
  *
  * @param feature - The name of the feature flag to check.
  * @param event - Optional H3 event context (used to access runtime config).
@@ -26,8 +31,15 @@ export const isFeatureEnabled = (feature: string, event?: H3Event): boolean => {
   const flags: FeatureFlagInput[] = config.flagSets?.[env] || []
 
   for (const flag of flags) {
-    if (typeof flag === 'string' && flag === feature) return true
-    if (typeof flag === 'object' && flag.name === feature && isFlagActiveNow(flag)) return true
+    const name: string = typeof flag === 'string' ? flag : flag.name
+    if (!matchFlag(name, feature)) continue
+
+    if (typeof flag === 'object') {
+      if (isFlagActiveNow(flag)) return true
+    }
+    else {
+      return true
+    }
   }
 
   return false

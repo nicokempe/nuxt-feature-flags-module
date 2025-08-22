@@ -1,10 +1,11 @@
 import type { FeatureFlagsConfig, FeatureFlag, FeatureFlagInput } from '../../../types/feature-flags'
 import { isFlagActiveNow } from '../utils/isFlagActiveNow'
+import { matchFlag } from '../utils/matchFlag'
 import { useRuntimeConfig } from '#imports'
 
 /**
  * Provides runtime access to feature flag utilities within the client app.
- * Supports both static and scheduled flags.
+ * Supports static flags, scheduled flags, and hierarchical paths with `*` wildcards for grouped checks.
  *
  * @returns An object with utilities:
  * - `isEnabled(flagName)` — checks if a feature is currently active
@@ -12,7 +13,7 @@ import { useRuntimeConfig } from '#imports'
  */
 export const useFeatureFlag = () => {
   const config: FeatureFlagsConfig = useRuntimeConfig().public.featureFlags
-  const env = config.environment
+  const env: string = config.environment
   const flags: FeatureFlagInput[] = config.flagSets?.[env] || []
 
   /**
@@ -20,14 +21,25 @@ export const useFeatureFlag = () => {
    * Supports:
    * - Static string flags
    * - Scheduled flags (with `activeFrom` and/or `activeUntil`)
+   * - Hierarchical paths and `*` wildcards declared in the flag set
+   *
+   * Wildcard queries only return `true` if the wildcard itself is enabled
+   * (e.g. checking `solutions/*` requires that `solutions/*` exists in the
+   * current flag set).
    *
    * @param flagName - The name of the feature flag to check.
    * @returns `true` if the feature is currently enabled, otherwise `false`.
    */
   const isEnabled = (flagName: string): boolean => {
     for (const flag of flags) {
-      if (typeof flag === 'string' && flag === flagName) return true
-      if (typeof flag === 'object' && flag.name === flagName && isFlagActiveNow(flag)) return true
+      const name: string = typeof flag === 'string' ? flag : flag.name
+      if (!matchFlag(name, flagName)) continue
+      if (typeof flag === 'object') {
+        if (isFlagActiveNow(flag)) return true
+      }
+      else {
+        return true
+      }
     }
     return false
   }
