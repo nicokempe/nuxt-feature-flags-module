@@ -2,6 +2,7 @@
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![npm downloads 18m][npm-downloads-18m-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 
 Lightweight, environment-based feature flag system for Nuxt 3 — made for developers who need dynamic feature control in routes, components, and APIs.
@@ -121,6 +122,8 @@ This project is licensed under the [MIT License](https://github.com/nicokempe/nu
 
 [npm-downloads-src]: https://img.shields.io/npm/dm/nuxt-feature-flags-module.svg?style=flat&colorA=020420&colorB=00DC82
 [npm-downloads-href]: https://npm.chart.dev/nuxt-feature-flags-module
+
+[npm-downloads-18m-src]: https://img.shields.io/npm/d18m/nuxt-feature-flags-module.svg?style=flat&colorA=020420&colorB=00DC82
 
 [license-src]: https://img.shields.io/npm/l/nuxt-feature-flags-module.svg?style=flat&colorA=020420&colorB=00DC82
 [license-href]: https://npmjs.com/package/nuxt-feature-flags-module
