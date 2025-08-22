@@ -1,4 +1,4 @@
-import { useFeatureFlag } from '../composables/useFeatureFlag'
+import { useFeatureFlag } from './useFeatureFlag'
 import { defineNuxtRouteMiddleware, showError } from '#app'
 
 /**

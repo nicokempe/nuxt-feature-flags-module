@@ -37,7 +37,6 @@ export default defineNuxtModule<FeatureFlagsConfig>({
 
     addImportsDir(resolver.resolve('runtime/composables'))
     addPlugin(resolver.resolve('runtime/plugin'))
-    addImportsDir(resolver.resolve('runtime/middleware'))
     addRouteMiddleware({
       name: 'feature-flag',
       path: resolver.resolve('runtime/middleware/featureFlag'),
