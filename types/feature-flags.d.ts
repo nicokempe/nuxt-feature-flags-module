@@ -1,6 +1,15 @@
+/**
+ * A feature flag definition which may be a simple string or an object with
+ * scheduling metadata. Flag names support hierarchical segments separated by
+ * `/` and may include `*` wildcards for pattern matching (e.g. `section/*`).
+ */
 export type FeatureFlagInput = string | FeatureFlag
 
 export interface FeatureFlag {
+  /**
+   * Unique name of the feature flag. May include `/` segments and end with
+   * `/*` to represent a wildcard group.
+   */
   name: string
   activeFrom?: string
   activeUntil?: string
@@ -28,7 +37,8 @@ export interface FeatureFlagsConfig {
   environment: string
 
   /**
-   * A record mapping each environment to an array of flags (string or { name, activeFrom, activeUntil }).
+   * A record mapping each environment to an array of flags (string or `{ name, activeFrom, activeUntil }`).
+   * Flag names may leverage hierarchical paths and `*` wildcards for grouped enablement.
    */
   flagSets: Record<string, FeatureFlagInput[]>
 

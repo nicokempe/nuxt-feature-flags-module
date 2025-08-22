@@ -5,7 +5,7 @@ import { useRuntimeConfig } from '#imports'
 
 /**
  * Provides runtime access to feature flag utilities within the client app.
- * Supports both static and scheduled flags.
+ * Supports static flags, scheduled flags, and hierarchical paths with `*` wildcards for grouped checks.
  *
  * @returns An object with utilities:
  * - `isEnabled(flagName)` — checks if a feature is currently active
@@ -21,8 +21,9 @@ export const useFeatureFlag = () => {
    * Supports:
    * - Static string flags
    * - Scheduled flags (with `activeFrom` and/or `activeUntil`)
+   * - Hierarchical paths and `*` wildcards (e.g. `solutions/*`)
    *
-   * @param flagName - The name of the feature flag to check.
+   * @param flagName - The name or wildcard pattern of the feature flag to check.
    * @returns `true` if the feature is currently enabled, otherwise `false`.
    */
   const isEnabled = (flagName: string): boolean => {

@@ -7,6 +7,7 @@ import { matchFlag } from './matchFlag'
 /**
  * Validates that all feature flags used in the source code are declared
  * in at least one environment of the FeatureFlagsConfig.
+ * Handles hierarchical flag paths and `*` wildcards, allowing patterns such as `solutions/*` in both declarations and usage.
  *
  * Supports customizing:
  * - `validation.mode`     (disabled | warn | error)

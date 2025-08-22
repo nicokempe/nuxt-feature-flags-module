@@ -6,11 +6,11 @@ import type { FeatureFlagInput, FeatureFlagsConfig } from '~/types/feature-flags
 
 /**
  * Server-side utility to check if a feature flag is currently enabled.
- * Supports both string and scheduled flags.
+ * Supports string flags, scheduled flags, and hierarchical wildcard syntax.
  *
  * Intended for use in server routes (`server/api/**`) or middleware.
  *
- * @param feature - The name of the feature flag to check.
+ * @param feature - The name or wildcard pattern of the feature flag to check.
  * @param event - Optional H3 event context (used to access runtime config).
  * @returns `true` if the feature is currently enabled in the active environment.
  *
