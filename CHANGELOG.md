@@ -1,6 +1,38 @@
 # Changelog
 
 
+## v2025.9.0
+
+[compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.6.2...v2025.9.0)
+
+### 🚀 Enhancements
+
+- **#78:** Add hierarchical & wildcard feature flags ([#80](https://github.com/nicokempe/nuxt-feature-flags-module/pull/80))
+- **playground:** Rebrand new-protected to meta-protected ([9fffa61](https://github.com/nicokempe/nuxt-feature-flags-module/commit/9fffa61))
+- **playground:** Add server page example ([3d4ab73](https://github.com/nicokempe/nuxt-feature-flags-module/commit/3d4ab73))
+- **playground:** Enhance homepage structure and add missing pages ([ed71243](https://github.com/nicokempe/nuxt-feature-flags-module/commit/ed71243))
+- **playground:** Add missing pages to the layout and extend footer content ([65ba5ea](https://github.com/nicokempe/nuxt-feature-flags-module/commit/65ba5ea))
+
+### 💅 Refactors
+
+- **middleware:** Expose defineFeatureFlagMiddleware as composable ([1a6e643](https://github.com/nicokempe/nuxt-feature-flags-module/commit/1a6e643))
+- **readability:** Improve variable naming and readability across flags system ([83a0cbb](https://github.com/nicokempe/nuxt-feature-flags-module/commit/83a0cbb))
+
+### 🏡 Chore
+
+- **pnpm:** Bump typescript from 5.8.3 to 5.9.2 ([c86547d](https://github.com/nicokempe/nuxt-feature-flags-module/commit/c86547d))
+- **scripts:** Move bump-version script and remove .ts typos ([bee21c4](https://github.com/nicokempe/nuxt-feature-flags-module/commit/bee21c4))
+- **pnpm:** Update packages ([1906068](https://github.com/nicokempe/nuxt-feature-flags-module/commit/1906068))
+
+### 🤖 CI
+
+- **release:** Automate version bumping in package.json ([0c68cca](https://github.com/nicokempe/nuxt-feature-flags-module/commit/0c68cca))
+- **workflows:** Update Node.js version to 22 in CI configuration ([044d207](https://github.com/nicokempe/nuxt-feature-flags-module/commit/044d207))
+
+### ❤️ Contributors
+
+- Nico Kempe ([@nicokempe](https://github.com/nicokempe))
+
 ## v2025.6.2
 
 [compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.6.1...v2025.6.2)
