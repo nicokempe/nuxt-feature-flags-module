@@ -60,19 +60,27 @@
         </p>
       </div>
 
-      <!-- Navigation Button -->
+      <!-- Route Protection Examples -->
       <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/10 shadow-lg">
         <h2 class="text-lg font-semibold mb-2 text-emerald-300">
-          🔐 Route Guard Example
+          🔐 Route Protection Examples
         </h2>
-        <button
-          class="rounded-lg bg-neutral-800 hover:opacity-80 text-white py-2 px-4 transition ease-in-out duration-200 cursor-pointer"
-          @click="navigateToProtected"
-        >
-          Go to Protected Page
-        </button>
+        <div class="flex flex-wrap gap-2">
+          <button
+            class="rounded-lg bg-neutral-800 hover:opacity-80 text-white py-2 px-4 transition ease-in-out duration-200 cursor-pointer"
+            @click="navigateToProtected"
+          >
+            Middleware Protected
+          </button>
+          <button
+            class="rounded-lg bg-neutral-800 hover:opacity-80 text-white py-2 px-4 transition ease-in-out duration-200 cursor-pointer"
+            @click="navigateToMetaProtected"
+          >
+            Meta Protected
+          </button>
+        </div>
         <p class="text-neutral-400 text-sm mt-2">
-          Redirects to <code>/404</code> unless <code>'newSystem'</code> is active.
+          Both pages require <code>'newSystem'</code>.
         </p>
       </div>
 
@@ -89,6 +97,22 @@
         </button>
         <p class="text-neutral-400 text-sm mt-2">
           Demonstrates grouped flags enabled via wildcard patterns.
+        </p>
+      </div>
+
+      <!-- Server API Demo -->
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/10 shadow-lg">
+        <h2 class="text-lg font-semibold mb-2 text-emerald-300">
+          🛠️ Server API Demo
+        </h2>
+        <button
+          class="rounded-lg bg-neutral-800 hover:opacity-80 text-white py-2 px-4 transition ease-in-out duration-200 cursor-pointer"
+          @click="navigateToServer"
+        >
+          View Demo
+        </button>
+        <p class="text-neutral-400 text-sm mt-2">
+          Calls API routes protected by feature flags.
         </p>
       </div>
     </div>
@@ -145,8 +169,21 @@ function navigateToProtected() {
   }
 }
 
+function navigateToMetaProtected() {
+  if (isEnabled('newSystem')) {
+    navigateTo('/meta-protected')
+  }
+  else {
+    navigateTo('/404')
+  }
+}
+
 function navigateToHierarchical() {
   navigateTo('/hierarchical')
+}
+
+function navigateToServer() {
+  navigateTo('/server')
 }
 
 useSeoMeta({
