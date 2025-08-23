@@ -31,9 +31,9 @@ describe('isFeatureEnabled', (): void => {
   })
 
   it('evaluates scheduled flags', (): void => {
-    const now: Date = new Date('2024-06-01T12:00:00Z')
+    const fixedTime: Date = new Date('2024-06-01T12:00:00Z')
     vi.useFakeTimers()
-    vi.setSystemTime(now)
+    vi.setSystemTime(fixedTime)
 
     runtimeConfig.featureFlags.flagSets.prod = [
       { name: 'scheduled', activeUntil: '2024-07-01T00:00:00Z' },
@@ -44,9 +44,9 @@ describe('isFeatureEnabled', (): void => {
   })
 
   it('returns false when flag is inactive', (): void => {
-    const now: Date = new Date('2024-08-01T12:00:00Z')
+    const fixedTime: Date = new Date('2024-08-01T12:00:00Z')
     vi.useFakeTimers()
-    vi.setSystemTime(now)
+    vi.setSystemTime(fixedTime)
 
     runtimeConfig.featureFlags.flagSets.prod = [
       { name: 'scheduled', activeUntil: '2024-07-01T00:00:00Z' },

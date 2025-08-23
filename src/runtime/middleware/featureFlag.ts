@@ -32,19 +32,19 @@ interface FeatureMeta {
  * ```
  */
 export default defineNuxtRouteMiddleware((to) => {
-  const meta: FeatureMeta = to.meta as FeatureMeta
-  const flag: string | undefined = meta.featureFlag
-  if (!flag) return
+  const routeMeta: FeatureMeta = to.meta as FeatureMeta
+  const requiredFlag: string | undefined = routeMeta.featureFlag
+  if (!requiredFlag) return
 
   const { isEnabled } = useFeatureFlag()
-  if (isEnabled(flag)) return
+  if (isEnabled(requiredFlag)) return
 
-  if (meta.featureNotifyOnBlock) {
-    console.warn(`[nuxt-feature-flags] Feature "${flag}" is disabled`)
+  if (routeMeta.featureNotifyOnBlock) {
+    console.warn(`[nuxt-feature-flags] Feature "${requiredFlag}" is disabled`)
   }
 
-  if (meta.featureFallback) {
-    return navigateTo(meta.featureFallback)
+  if (routeMeta.featureFallback) {
+    return navigateTo(routeMeta.featureFallback)
   }
 
   return showError({ statusCode: 404, statusMessage: 'Feature not available' })

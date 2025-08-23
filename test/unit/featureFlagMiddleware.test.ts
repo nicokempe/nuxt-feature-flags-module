@@ -39,17 +39,17 @@ describe('featureFlag middleware', (): void => {
 
   it('redirects to fallback when flag disabled', (): void => {
     isEnabled.mockReturnValue(false)
-    const to: RouteLocationNormalized = makeRoute({ featureFlag: 'test', featureFallback: '/404' } as Record<string, unknown>)
-    const from: RouteLocationNormalized = makeRoute({})
-    middleware(to, from)
+    const toRoute: RouteLocationNormalized = makeRoute({ featureFlag: 'test', featureFallback: '/404' } as Record<string, unknown>)
+    const fromRoute: RouteLocationNormalized = makeRoute({})
+    middleware(toRoute, fromRoute)
     expect(navigateTo).toHaveBeenCalledWith('/404')
   })
 
   it('shows error when flag disabled and no fallback', (): void => {
     isEnabled.mockReturnValue(false)
-    const to: RouteLocationNormalized = makeRoute({ featureFlag: 'test' } as Record<string, unknown>)
-    const from: RouteLocationNormalized = makeRoute({})
-    middleware(to, from)
+    const toRoute: RouteLocationNormalized = makeRoute({ featureFlag: 'test' } as Record<string, unknown>)
+    const fromRoute: RouteLocationNormalized = makeRoute({})
+    middleware(toRoute, fromRoute)
     expect(showError).toHaveBeenCalledWith({ statusCode: 404, statusMessage: 'Feature not available' })
   })
 

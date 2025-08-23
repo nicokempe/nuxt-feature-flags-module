@@ -27,15 +27,15 @@ import type { FeatureFlagInput, FeatureFlagsConfig } from '~/types/feature-flags
  */
 export const isFeatureEnabled = (feature: string, event?: H3Event): boolean => {
   const config: FeatureFlagsConfig = useRuntimeConfig(event).featureFlags
-  const env: string = config.environment
-  const flags: FeatureFlagInput[] = config.flagSets?.[env] || []
+  const currentEnvironment: string = config.environment
+  const environmentFlags: FeatureFlagInput[] = config.flagSets?.[currentEnvironment] || []
 
-  for (const flag of flags) {
-    const name: string = typeof flag === 'string' ? flag : flag.name
-    if (!matchFlag(name, feature)) continue
+  for (const flagEntry of environmentFlags) {
+    const entryName: string = typeof flagEntry === 'string' ? flagEntry : flagEntry.name
+    if (!matchFlag(entryName, feature)) continue
 
-    if (typeof flag === 'object') {
-      if (isFlagActiveNow(flag)) return true
+    if (typeof flagEntry === 'object') {
+      if (isFlagActiveNow(flagEntry)) return true
     }
     else {
       return true

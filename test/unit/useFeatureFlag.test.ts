@@ -69,16 +69,16 @@ describe('useFeatureFlag', (): void => {
 
   it('supports hierarchical wildcard patterns', (): void => {
     runtimeConfig.public.featureFlags.flagSets.prod = ['solutions/*']
-    let utils = useFeatureFlag()
-    expect(utils.isEnabled('solutions/company-portal/addons/sales')).toBe(true)
-    expect(utils.isEnabled('solutions/*')).toBe(true)
+    let flagUtils = useFeatureFlag()
+    expect(flagUtils.isEnabled('solutions/company-portal/addons/sales')).toBe(true)
+    expect(flagUtils.isEnabled('solutions/*')).toBe(true)
 
     runtimeConfig.public.featureFlags.flagSets.prod = ['solutions/company-portal/addons/sales']
-    utils = useFeatureFlag()
-    expect(utils.isEnabled('solutions/*')).toBe(false)
+    flagUtils = useFeatureFlag()
+    expect(flagUtils.isEnabled('solutions/*')).toBe(false)
 
     runtimeConfig.public.featureFlags.flagSets.prod = ['*']
-    utils = useFeatureFlag()
-    expect(utils.isEnabled('whatever')).toBe(true)
+    flagUtils = useFeatureFlag()
+    expect(flagUtils.isEnabled('whatever')).toBe(true)
   })
 })

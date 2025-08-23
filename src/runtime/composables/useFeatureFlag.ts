@@ -13,8 +13,8 @@ import { useRuntimeConfig } from '#imports'
  */
 export const useFeatureFlag = () => {
   const config: FeatureFlagsConfig = useRuntimeConfig().public.featureFlags
-  const env: string = config.environment
-  const flags: FeatureFlagInput[] = config.flagSets?.[env] || []
+  const currentEnvironment: string = config.environment
+  const environmentFlags: FeatureFlagInput[] = config.flagSets?.[currentEnvironment] || []
 
   /**
    * Checks whether a feature flag is currently enabled.
@@ -31,11 +31,11 @@ export const useFeatureFlag = () => {
    * @returns `true` if the feature is currently enabled, otherwise `false`.
    */
   const isEnabled = (flagName: string): boolean => {
-    for (const flag of flags) {
-      const name: string = typeof flag === 'string' ? flag : flag.name
-      if (!matchFlag(name, flagName)) continue
-      if (typeof flag === 'object') {
-        if (isFlagActiveNow(flag)) return true
+    for (const flagEntry of environmentFlags) {
+      const entryName: string = typeof flagEntry === 'string' ? flagEntry : flagEntry.name
+      if (!matchFlag(entryName, flagName)) continue
+      if (typeof flagEntry === 'object') {
+        if (isFlagActiveNow(flagEntry)) return true
       }
       else {
         return true
@@ -51,15 +51,15 @@ export const useFeatureFlag = () => {
    * @returns Array of enabled feature flag names.
    */
   const listFlags = (): string[] => {
-    return flags
-      .filter((flag): flag is FeatureFlag =>
-        typeof flag === 'object'
-        && typeof flag.name === 'string'
-        && isFlagActiveNow(flag),
+    return environmentFlags
+      .filter((flagEntry): flagEntry is FeatureFlag =>
+        typeof flagEntry === 'object'
+        && typeof flagEntry.name === 'string'
+        && isFlagActiveNow(flagEntry),
       )
-      .map(flag => flag.name)
+      .map(flagEntry => flagEntry.name)
       .concat(
-        flags.filter((flag): flag is string => typeof flag === 'string'),
+        environmentFlags.filter((flagEntry): flagEntry is string => typeof flagEntry === 'string'),
       )
   }
 

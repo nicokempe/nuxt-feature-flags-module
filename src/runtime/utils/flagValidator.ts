@@ -118,12 +118,12 @@ export async function validateFeatureFlags(
 
   // 7. Build Set of all declared flags (across all flags in all flagSets)
   const declaredFlags: string[] = []
-  for (const [env, envFlags] of Object.entries(options.flagSets)) {
-    for (const item of envFlags || []) {
-      const name: string = typeof item === 'string' ? item : item.name
+  for (const [environment, environmentFlags] of Object.entries(options.flagSets)) {
+    for (const flagEntry of environmentFlags || []) {
+      const name: string = typeof flagEntry === 'string' ? flagEntry : flagEntry.name
       declaredFlags.push(name)
       if (name === '*') {
-        console.warn(`[nuxt-feature-flags] Environment "${env}" uses "*" which enables all flags and should only be used for debugging.`)
+        console.warn(`[nuxt-feature-flags] Environment "${environment}" uses "*" which enables all flags and should only be used for debugging.`)
       }
     }
   }

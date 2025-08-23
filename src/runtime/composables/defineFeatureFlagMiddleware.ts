@@ -7,7 +7,7 @@ import { defineNuxtRouteMiddleware, showError } from '#app'
  *
  * Can be used in `definePageMeta()` or manually via named middleware.
  *
- * @param flag - The name of the feature flag required for this route.
+ * @param requiredFlag - The name of the feature flag required for this route.
  * @returns A Nuxt route middleware that triggers a 404 if the feature is disabled.
  *
  * @example
@@ -17,10 +17,10 @@ import { defineNuxtRouteMiddleware, showError } from '#app'
  * })
  * ```
  */
-export const defineFeatureFlagMiddleware = (flag: string) => {
+export const defineFeatureFlagMiddleware = (requiredFlag: string) => {
   return defineNuxtRouteMiddleware(() => {
     const { isEnabled } = useFeatureFlag()
-    if (!isEnabled(flag)) {
+    if (!isEnabled(requiredFlag)) {
       return showError({ statusCode: 404, statusMessage: 'Feature not available' })
     }
   })
