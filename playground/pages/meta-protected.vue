@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen p-12 text-white bg-neutral-950">
     <h2 class="text-2xl font-bold mb-4">
-      🔐 Protected Feature Page
+      🔐 Meta Protected Feature Page
     </h2>
     <p>
       This page is protected by feature flag:
@@ -15,5 +15,10 @@ definePageMeta({
   featureFlag: 'newSystem',
   featureFallback: '/404',
   featureNotifyOnBlock: true,
+})
+
+useSeoMeta({
+  title: 'Nuxt Feature Flags Playground - Meta Protected',
+  description: 'Demonstrates route protection using featureFlag metadata.',
 })
 </script>
