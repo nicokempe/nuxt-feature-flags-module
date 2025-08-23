@@ -13,7 +13,6 @@ import url from 'node:url'
  * Avoids console.error to keep CI logs tidy and aligned with project preferences.
  *
  * @param {unknown} error - The thrown error or value.
- * @returns {never}
  */
 function handleError(error) {
   const message = error instanceof Error ? error.message : String(error)
