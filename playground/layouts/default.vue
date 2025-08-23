@@ -40,10 +40,23 @@
             class="hover:text-emerald-400 transition-colors"
           >Scheduled</NuxtLink>
           <NuxtLink
+            to="/hierarchical"
+            class="hover:text-emerald-400 transition-colors"
+          >Hierarchical</NuxtLink>
+          <NuxtLink
+            to="/server"
+            class="hover:text-emerald-400 transition-colors"
+          >Server</NuxtLink>
+          <NuxtLink
             v-feature="'newSystem'"
             to="/protected"
             class="hover:text-emerald-400 transition-colors"
           >Protected</NuxtLink>
+          <NuxtLink
+            v-feature="'newSystem'"
+            to="/meta-protected"
+            class="hover:text-emerald-400 transition-colors"
+          >Meta Protected</NuxtLink>
         </nav>
       </div>
 
@@ -61,10 +74,23 @@
           class="block hover:text-emerald-400 transition-colors"
         >Scheduled</NuxtLink>
         <NuxtLink
+          to="/hierarchical"
+          class="block hover:text-emerald-400 transition-colors"
+        >Hierarchical</NuxtLink>
+        <NuxtLink
+          to="/server"
+          class="block hover:text-emerald-400 transition-colors"
+        >Server</NuxtLink>
+        <NuxtLink
           v-feature="'newSystem'"
           to="/protected"
           class="block hover:text-emerald-400 transition-colors"
         >Protected</NuxtLink>
+        <NuxtLink
+          v-feature="'newSystem'"
+          to="/meta-protected"
+          class="block hover:text-emerald-400 transition-colors"
+        >Meta Protected</NuxtLink>
       </div>
     </header>
 
@@ -72,7 +98,7 @@
       <slot />
     </main>
 
-    <footer class="mt-16 border-t border-neutral-800 py-6 text-center text-sm text-neutral-500">
+    <footer class="mt-16 border-t border-neutral-800 py-6 text-center text-sm text-neutral-500 space-y-2">
       Made with 💚 by
       <NuxtLink
         to="https://www.nicokempe.de/"
@@ -80,7 +106,13 @@
       >
         Nico Kempe
       </NuxtLink>
-      — <code>nuxt-feature-flags-module</code>
+      <br>
+      <NuxtLink
+        to="https://github.com/nicokempe/nuxt-feature-flags-module"
+        class="hover:opacity-80 transition ease-in-out duration-200"
+      >
+        <code>GitHub / nicokempe / nuxt-feature-flags-module</code>
+      </NuxtLink>
     </footer>
   </div>
 </template>
