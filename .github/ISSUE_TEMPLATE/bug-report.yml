@@ -1,5 +1,5 @@
 name: "\U0001F41E Bug report"
-description: Create a report to help me improve this Agent
+description: Create a report to help me improve this module
 labels: [":fire: bug"]
 body:
   - type: markdown
