@@ -1,5 +1,5 @@
 name: "🚀 New feature proposal"
-description: Suggest an idea for this Agent
+description: Suggest an idea for this module
 labels: [":sparkles: feature request"]
 body:
   - type: markdown
