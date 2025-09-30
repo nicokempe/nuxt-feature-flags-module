@@ -1,6 +1,41 @@
 # Changelog
 
 
+## v2025.8.0...main
+
+[compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.8.0...main)
+
+### 🩹 Fixes
+
+- **ci:** Provision pnpm with pnpm/action-setup and use frozen install ([74ded44](https://github.com/nicokempe/nuxt-feature-flags-module/commit/74ded44))
+- **ci:** Enable Corepack and run scripts via pnpm in lint & test jobs ([a5ff075](https://github.com/nicokempe/nuxt-feature-flags-module/commit/a5ff075))
+- **ci:** Standardize pnpm setup with pnpm/action-setup and frozen installs ([569a0c0](https://github.com/nicokempe/nuxt-feature-flags-module/commit/569a0c0))
+
+### 📖 Documentation
+
+- **readme:** Update banner and add new module icon ([968c5e8](https://github.com/nicokempe/nuxt-feature-flags-module/commit/968c5e8))
+
+### 🏡 Chore
+
+- **pnpm:** Bump nuxt from 4.0.3 to 4.1.0 ([#83](https://github.com/nicokempe/nuxt-feature-flags-module/pull/83))
+- **pnpm:** Bump eslint from 9.34.0 to 9.35.0 ([#89](https://github.com/nicokempe/nuxt-feature-flags-module/pull/89))
+- **pnpm:** Bump vite from 7.1.3 to 7.1.5 in the npm_and_yarn group across 1 directory ([#90](https://github.com/nicokempe/nuxt-feature-flags-module/pull/90))
+- **pnpm:** Bump @types/node from 24.3.1 to 24.5.2 ([#97](https://github.com/nicokempe/nuxt-feature-flags-module/pull/97))
+- **github:** Update issue template copy-paste error ([00c7c05](https://github.com/nicokempe/nuxt-feature-flags-module/commit/00c7c05))
+- **github:** Fix copy-paste error ([5084f9a](https://github.com/nicokempe/nuxt-feature-flags-module/commit/5084f9a))
+- **pnpm:** Bump @nuxt/devtools from 2.6.3 to 2.6.5 ([#99](https://github.com/nicokempe/nuxt-feature-flags-module/pull/99))
+- **pnpm:** Bump @types/node from 24.5.2 to 24.6.0 ([#101](https://github.com/nicokempe/nuxt-feature-flags-module/pull/101))
+- **actions:** Bump actions/setup-node@v4 to actions/setup-node@v5 ([2a0dca1](https://github.com/nicokempe/nuxt-feature-flags-module/commit/2a0dca1))
+- **pnpm:** Update packages ([53937af](https://github.com/nicokempe/nuxt-feature-flags-module/commit/53937af))
+
+### 🤖 CI
+
+- **publish:** Improve publish script robustness ([8428cae](https://github.com/nicokempe/nuxt-feature-flags-module/commit/8428cae))
+
+### ❤️ Contributors
+
+- Nico Kempe ([@nicokempe](https://github.com/nicokempe))
+
 ## v2025.6.2...main
 
 [compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/v2025.6.2...main)
