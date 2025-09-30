@@ -23,10 +23,13 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm i -g --force corepack@latest && corepack enable
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
+          run_install: false
 
       - name: Install dependencies
-        run: npx nypm@latest i
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
         run: npm run lint
@@ -41,10 +44,13 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm i -g --force corepack@latest && corepack enable
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
+          run_install: false
 
       - name: Install dependencies
-        run: npx nypm@latest i
+        run: pnpm install --frozen-lockfile
 
       - name: Playground prepare
         run: npm run dev:prepare
