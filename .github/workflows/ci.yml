@@ -16,23 +16,28 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node: [ 22 ]
+
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v5
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install node
+        uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: ${{ matrix.node }}
+          cache: pnpm
 
-      - name: Enable corepack
-        run: corepack enable
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.11.0
-          run_install: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Lint
         run: pnpm run lint
@@ -41,22 +46,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - uses: actions/setup-node@v5
         with:
           node-version: 22
 
-      - name: Enable corepack
-        run: corepack enable
-
-      - uses: pnpm/action-setup@v4
+      - name: Install node
+        uses: actions/setup-node@v5
         with:
-          version: 10.11.0
-          run_install: false
+          node-version: ${{ matrix.node }}
+          cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Playground prepare
         run: pnpm run dev:prepare
