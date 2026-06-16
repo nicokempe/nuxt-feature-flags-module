@@ -1,9 +1,18 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
   devtools: { enabled: true },
-  compatibilityDate: '2025-08-22',
+  compatibilityDate: '2026-06-16',
   nitro: {
     preset: 'cloudflare_pages',
+  },
+
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+      ],
+    },
   },
 
   featureFlags: {
