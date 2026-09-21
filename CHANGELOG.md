@@ -1,5 +1,14 @@
 # Changelog
 
+All notable changes to `nuxt-feature-flags-module` are documented here. Automated entries are
+generated from Conventional Commits and use the canonical `YYYY.M.RELEASE_NUMBER` version
+everywhere. Historical entries below retain the tag names under which they were originally
+published.
+
+## 2026.6.0 (pre-automation baseline)
+
+- Marks the public npm package state before the GitHub release workflow was introduced.
+
 
 ## v2025.8.0...main
 
@@ -311,4 +320,3 @@
 ### ❤️ Contributors
 
 - Nico Kempe ([@nicokempe](https://github.com/nicokempe))
-

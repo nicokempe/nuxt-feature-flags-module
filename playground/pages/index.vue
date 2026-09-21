@@ -156,8 +156,11 @@
 </template>
 
 <script setup lang="ts">
+import type { FeatureFlagsConfig } from '../../types/feature-flags'
+
 const { isEnabled, listFlags } = useFeatureFlag()
-const env = useRuntimeConfig().public.featureFlags.environment
+const featureFlags = useRuntimeConfig().public.featureFlags as FeatureFlagsConfig
+const env = featureFlags.environment
 const showBetaModal = ref(false)
 
 function navigateToProtected() {
