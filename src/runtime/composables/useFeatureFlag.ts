@@ -12,7 +12,7 @@ import { useRuntimeConfig } from '#imports'
  * - `listFlags()` — returns all currently active flag names (scheduled + static)
  */
 export const useFeatureFlag = () => {
-  const config: FeatureFlagsConfig = useRuntimeConfig().public.featureFlags
+  const config = useRuntimeConfig().public.featureFlags as FeatureFlagsConfig
   const currentEnvironment: string = config.environment
   const environmentFlags: FeatureFlagInput[] = config.flagSets?.[currentEnvironment] || []
 
