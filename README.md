@@ -164,12 +164,18 @@ definePageMeta({
   pnpm run test
   pnpm run test:watch
   
-  # Release new version
-  pnpm run release
+  # Validate release tooling
+  pnpm run release:check
   ```
 
 </details>
 
+
+## Releases
+
+Maintainers publish the public npm package and matching GitHub Release from the **Release package**
+workflow. Versioning, credentials, and retry behavior are documented in
+[RELEASING.md](./RELEASING.md).
 
 ## License
 This project is licensed under the [MIT License](https://github.com/nicokempe/nuxt-feature-flags-module/blob/main/LICENSE).

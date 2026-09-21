@@ -44,12 +44,13 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "release": "pnpm run lint && pnpm run test && pnpm run prepack && node .github/scripts/bump-version.mjs && changelogen --output && node .github/scripts/publish.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "release:check": "tsc --project scripts/release/tsconfig.json && node --test scripts/release/version-policy.test.ts",
+    "release:prepare": "node scripts/release/prepare-release.ts",
     "refresh": "rm -rf pnpm-lock.yaml .nuxt/ dist/ node_modules/ playground/.nuxt/ playground/.output/ playground/node_modules/ && pnpm install && nuxi prepare && pnpm run lint:fix && pnpm run test && pnpm run prepack && pnpm run dev"
   },
   "dependencies": {
