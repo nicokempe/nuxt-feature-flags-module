@@ -80,7 +80,8 @@ function parseVersion(value: string, pattern: RegExp): CalendarVersionParts | nu
   try {
     validateVersionParts(parts)
     return parts
-  } catch {
+  }
+  catch {
     return null
   }
 }
@@ -88,7 +89,7 @@ function parseVersion(value: string, pattern: RegExp): CalendarVersionParts | nu
 /** Resolves a release date to a year and month in the configured time zone. */
 function getReleaseMonth(releaseDate: Date, timeZone: string): Pick<CalendarVersionParts, 'year' | 'month'> {
   if (Number.isNaN(releaseDate.getTime())) {
-    throw new Error('Release date must be valid.')
+    throw new TypeError('Release date must be valid.')
   }
 
   const dateParts = new Intl.DateTimeFormat('en-US', {

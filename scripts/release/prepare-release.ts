@@ -217,7 +217,7 @@ function findMarkdownSection(markdown: string, title: string): MarkdownSection {
   const start = headingMatch.index
   const bodyStart = start + headingMatch[0].length
   const remainingMarkdown = markdown.slice(bodyStart)
-  const nextHeading = /^##\s+.+$/m.exec(remainingMarkdown)
+  const nextHeading = /^##[ \t]+\S[^\r\n]*$/m.exec(remainingMarkdown)
   const end = nextHeading === null ? markdown.length : bodyStart + nextHeading.index
 
   return { bodyStart, end, start }
@@ -352,10 +352,12 @@ function parseCliOptions(argumentsList: readonly string[]): CliOptions {
     if (argument === '--github-output') {
       githubOutputPath = value ?? ''
       argumentIndex += 1
-    } else if (argument === '--notes-file') {
+    }
+    else if (argument === '--notes-file') {
       notesFilePath = value ?? ''
       argumentIndex += 1
-    } else {
+    }
+    else {
       throw new Error(`Unknown release option "${argument ?? ''}".`)
     }
   }
@@ -384,7 +386,8 @@ function writeWorkflowOutputs(
 
 try {
   main()
-} catch (error: unknown) {
+}
+catch (error: unknown) {
   console.error(error instanceof Error ? error.message : String(error))
   process.exitCode = 1
 }
