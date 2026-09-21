@@ -53,7 +53,7 @@ function main(): void {
   const currentVersion = getRequiredString(packageObject, 'version', packagePath)
   const baseline = getValidatedBaseline()
   const versionsAtHead = splitLines(runGit(['tag', '--points-at', 'HEAD', '--list']))
-    .filter((tag) => parseReleaseVersion(tag) !== null)
+    .filter(tag => parseReleaseVersion(tag) !== null)
 
   if (versionsAtHead.length > 1) {
     throw new Error(`HEAD has multiple calendar release versions: ${versionsAtHead.join(', ')}`)
@@ -165,23 +165,33 @@ function runChangelogen(
 /** Selects the repository package manager without adding release-only dependencies. */
 function getChangelogenInvocation(packageObject: Record<string, unknown>): CommandInvocation {
   const packageManager = packageObject.packageManager
-  if (typeof packageManager !== 'string') {
-    throw new Error('package.json must declare a pnpm or Bun packageManager for releases.')
-  }
-  if (packageManager.startsWith('pnpm@')) {
-    return {
-      command: 'pnpm',
-      argumentsList: ['dlx', `changelogen@${changelogenVersion}`],
+  const declaresBunPackageManager = typeof packageManager === 'string'
+    && packageManager.startsWith('bun@')
+  if (typeof packageManager === 'string') {
+    if (packageManager.startsWith('pnpm@')) {
+      return {
+        command: 'pnpm',
+        argumentsList: ['dlx', `changelogen@${changelogenVersion}`],
+      }
+    }
+    if (!packageManager.startsWith('bun@')) {
+      throw new Error(`Unsupported package manager "${packageManager}".`)
     }
   }
-  if (packageManager.startsWith('bun@')) {
+
+  const engines = packageObject.engines
+  const declaresBun = typeof engines === 'object'
+    && engines !== null
+    && !Array.isArray(engines)
+    && typeof (engines as Record<string, unknown>).bun === 'string'
+  if (declaresBunPackageManager || declaresBun) {
     return {
       command: 'bunx',
       argumentsList: [`changelogen@${changelogenVersion}`],
     }
   }
 
-  throw new Error(`Unsupported package manager "${packageManager}".`)
+  throw new Error('package.json must declare pnpm as packageManager or a Bun engine.')
 }
 
 /** Extracts the body of a version section for the GitHub Release. */
@@ -241,16 +251,16 @@ function getLatestReachableReleaseVersion(baselineCommit: string): string | null
 
 /** Returns the previous reachable release tag before the supplied tag. */
 function getPreviousReleaseVersion(version: string, baselineCommit: string): string | null {
-  return getReachableReleaseVersions(baselineCommit).find((tag) => tag !== version) ?? null
+  return getReachableReleaseVersions(baselineCommit).find(tag => tag !== version) ?? null
 }
 
 /** Lists canonical reachable tags whose commits include the migration baseline. */
 function getReachableReleaseVersions(baselineCommit: string): string[] {
   const mergedTags = splitLines(runGit(['tag', '--merged', 'HEAD', '--sort=-creatordate']))
   return mergedTags
-    .filter((tag) => parseReleaseVersion(tag) !== null)
-    .filter((tag) => runGit(['rev-parse', `${tag}^{commit}`]) !== baselineCommit)
-    .filter((tag) => gitCommandSucceeds([
+    .filter(tag => parseReleaseVersion(tag) !== null)
+    .filter(tag => runGit(['rev-parse', `${tag}^{commit}`]) !== baselineCommit)
+    .filter(tag => gitCommandSucceeds([
       'merge-base',
       '--is-ancestor',
       baselineCommit,
@@ -324,7 +334,7 @@ function gitCommandSucceeds(argumentsList: readonly string[]): boolean {
 
 /** Splits newline-delimited command output into non-empty values. */
 function splitLines(value: string): string[] {
-  return value.split(/\r?\n/).map((line) => line.trim()).filter((line) => line.length > 0)
+  return value.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0)
 }
 
 /** Parses the two required workflow path options. */

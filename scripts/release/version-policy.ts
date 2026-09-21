@@ -45,10 +45,10 @@ export function calculateNextReleaseVersion(
   }
 
   const allocatedReleaseNumbers = tags
-    .map((tag) => parseReleaseVersion(tag))
+    .map(tag => parseReleaseVersion(tag))
     .filter((parts): parts is CalendarVersionParts => parts !== null)
-    .filter((parts) => parts.year === releaseMonth.year && parts.month === releaseMonth.month)
-    .map((parts) => parts.releaseNumber)
+    .filter(parts => parts.year === releaseMonth.year && parts.month === releaseMonth.month)
+    .map(parts => parts.releaseNumber)
 
   if (currentVersionParts.year === releaseMonth.year && currentVersionParts.month === releaseMonth.month) {
     allocatedReleaseNumbers.push(currentVersionParts.releaseNumber)
@@ -96,8 +96,8 @@ function getReleaseMonth(releaseDate: Date, timeZone: string): Pick<CalendarVers
     month: '2-digit',
     timeZone,
   }).formatToParts(releaseDate)
-  const year = Number.parseInt(dateParts.find((part) => part.type === 'year')?.value ?? '', 10)
-  const month = Number.parseInt(dateParts.find((part) => part.type === 'month')?.value ?? '', 10)
+  const year = Number.parseInt(dateParts.find(part => part.type === 'year')?.value ?? '', 10)
+  const month = Number.parseInt(dateParts.find(part => part.type === 'month')?.value ?? '', 10)
   const parts = { year, month, releaseNumber: 0 }
   validateVersionParts(parts)
 
