@@ -73,14 +73,5 @@
     "vue-tsc": "3.3.5",
     "wrangler": "4.101.0"
   },
-  "packageManager": "pnpm@11.7.0",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "esbuild",
-      "sharp",
-      "unrs-resolver",
-      "workerd"
-    ]
-  }
+  "packageManager": "pnpm@11.7.0"
 }
