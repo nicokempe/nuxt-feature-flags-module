@@ -71,11 +71,12 @@
 </template>
 
 <script setup lang="ts">
+import type { FeatureFlagsConfig } from '../../types/feature-flags'
 import { useFeatureFlag, useRuntimeConfig } from '#imports'
 
 const { isEnabled } = useFeatureFlag()
 const now = new Date().toISOString()
-const config = useRuntimeConfig().public.featureFlags
+const config = useRuntimeConfig().public.featureFlags as FeatureFlagsConfig
 
 const scheduledFlags = computed(() => {
   const env = config.environment
