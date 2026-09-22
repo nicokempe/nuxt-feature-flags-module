@@ -6,15 +6,6 @@ export default defineNuxtConfig({
     preset: 'cloudflare_pages',
   },
 
-  vite: {
-    optimizeDeps: {
-      include: [
-        '@vue/devtools-core',
-        '@vue/devtools-kit',
-      ],
-    },
-  },
-
   featureFlags: {
     environment: process.env.FEATURE_ENV || 'development',
     flagSets: {
