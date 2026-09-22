@@ -5,6 +5,14 @@ generated from Conventional Commits and use the canonical `YYYY.M.RELEASE_NUMBER
 everywhere. Historical entries below retain the tag names under which they were originally
 published.
 
+## 2026.9.0
+
+[compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/81ada268c9197600022b5a7d271f82a86b5d18f7...2026.9.0)
+
+### 🤖 CI
+
+- **release:** Automate calendar releases ([#167](https://github.com/nicokempe/nuxt-feature-flags-module/pull/167))
+
 ## 2026.6.0 (pre-automation baseline)
 
 - Marks the public npm package state before the GitHub release workflow was introduced.
