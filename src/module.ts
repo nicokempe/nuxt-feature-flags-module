@@ -32,8 +32,10 @@ export default defineNuxtModule<FeatureFlagsConfig>({
   setup(options: FeatureFlagsConfig, nuxt: Nuxt): void {
     const resolver: Resolver = createResolver(import.meta.url)
 
-    nuxt.options.runtimeConfig.public.featureFlags = options
-    nuxt.options.runtimeConfig.featureFlags = options
+    Object.assign(nuxt.options.runtimeConfig.public, {
+      featureFlags: options,
+    })
+    Object.assign(nuxt.options.runtimeConfig, { featureFlags: options })
 
     addImportsDir(resolver.resolve('runtime/composables'))
     addPlugin(resolver.resolve('runtime/plugin'))
