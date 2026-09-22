@@ -54,25 +54,25 @@
     "refresh": "rm -rf pnpm-lock.yaml .nuxt/ dist/ node_modules/ playground/.nuxt/ playground/.output/ playground/node_modules/ && pnpm install && nuxi prepare && pnpm run lint:fix && pnpm run test && pnpm run prepack && pnpm run dev"
   },
   "dependencies": {
-    "@nuxt/kit": "4.4.8",
-    "globby": "16.2.0",
+    "@nuxt/kit": "4.5.2",
+    "globby": "16.2.4",
     "pathe": "2.0.3"
   },
   "devDependencies": {
-    "@nuxt/devtools": "3.2.4",
-    "@nuxt/eslint": "1.16.0",
-    "@nuxt/eslint-config": "1.16.0",
-    "@nuxt/module-builder": "1.0.2",
-    "@nuxt/schema": "4.4.8",
-    "@nuxt/test-utils": "4.0.3",
-    "@types/node": "25.9.3",
+    "@nuxt/devtools": "3.4.2",
+    "@nuxt/eslint": "1.17.0",
+    "@nuxt/eslint-config": "1.17.0",
+    "@nuxt/module-builder": "1.0.3",
+    "@nuxt/schema": "4.5.2",
+    "@nuxt/test-utils": "4.3.2",
+    "@types/node": "25.9.8",
     "changelogen": "^0.6.2",
-    "eslint": "10.5.0",
-    "nuxt": "4.4.8",
-    "typescript": "5.9.2",
-    "vitest": "4.1.9",
-    "vue-tsc": "3.3.5",
-    "wrangler": "4.101.0"
+    "eslint": "10.11.0",
+    "nuxt": "4.5.2",
+    "typescript": "5.9.3",
+    "vitest": "4.1.11",
+    "vue-tsc": "3.3.11",
+    "wrangler": "4.136.1"
   },
-  "packageManager": "pnpm@11.7.0"
+  "packageManager": "pnpm@12.3.4"
 }
