@@ -350,7 +350,7 @@ jobs:
           fi
 
       - name: Create or update GitHub Release
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           RELEASE_NOTES_PATH: ${{ steps.release.outputs.release_notes_path }}
           VERSION: ${{ inputs.publish_version }}
