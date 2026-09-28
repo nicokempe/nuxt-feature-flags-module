@@ -72,7 +72,7 @@
     "typescript": "5.9.3",
     "vitest": "4.1.11",
     "vue-tsc": "3.3.11",
-    "wrangler": "4.136.1"
+    "wrangler": "4.140.0"
   },
   "packageManager": "pnpm@12.5.1"
 }
