@@ -68,7 +68,7 @@
     "@types/node": "25.9.8",
     "changelogen": "^0.6.2",
     "eslint": "10.11.0",
-    "nuxt": "4.5.2",
+    "nuxt": "4.6.2",
     "typescript": "5.9.3",
     "vitest": "4.1.11",
     "vue-tsc": "3.3.11",
