@@ -29,6 +29,11 @@ Lightweight, environment-based feature flag system for Nuxt - made for developer
 
 ## Quick Setup
 
+The module requires Node.js `^20.19.0 || >=22.12.0`, matching
+`@nuxt/kit` 4.6. Existing feature flag configuration and runtime APIs are unchanged.
+Your Nuxt version may require a newer Node.js release; the Nuxt 4.6.4 development
+setup in this repository uses Node.js 24.21.0.
+
 Install the module to your Nuxt application with one command:
 
 ```bash

@@ -14,6 +14,9 @@
   "sideEffects": false,
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "keywords": [
     "nuxt",
     "nuxt3",
@@ -40,7 +43,7 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxt-module-build build",
+    "prepack": "node scripts/clean-dist.mjs && nuxt-module-build build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
@@ -54,25 +57,25 @@
     "refresh": "rm -rf pnpm-lock.yaml .nuxt/ dist/ node_modules/ playground/.nuxt/ playground/.output/ playground/node_modules/ && pnpm install && nuxi prepare && pnpm run lint:fix && pnpm run test && pnpm run prepack && pnpm run dev"
   },
   "dependencies": {
-    "@nuxt/kit": "4.5.2",
+    "@nuxt/kit": "4.6.4",
     "globby": "16.2.4",
     "pathe": "2.0.3"
   },
   "devDependencies": {
-    "@nuxt/devtools": "3.4.2",
+    "@nuxt/devtools": "3.4.4",
     "@nuxt/eslint": "1.17.0",
     "@nuxt/eslint-config": "1.17.0",
     "@nuxt/module-builder": "1.0.3",
-    "@nuxt/schema": "4.5.2",
-    "@nuxt/test-utils": "4.3.2",
-    "@types/node": "25.9.8",
+    "@nuxt/schema": "4.6.4",
+    "@nuxt/test-utils": "4.3.4",
+    "@types/node": "24.19.2",
     "changelogen": "^0.6.2",
-    "eslint": "10.11.0",
-    "nuxt": "4.5.2",
+    "eslint": "10.14.0",
+    "nuxt": "4.6.4",
     "typescript": "5.9.3",
-    "vitest": "4.1.11",
-    "vue-tsc": "3.3.11",
-    "wrangler": "4.147.0"
+    "vitest": "5.1.0",
+    "vue-tsc": "3.3.14",
+    "wrangler": "4.158.0"
   },
   "packageManager": "pnpm@12.5.1"
 }

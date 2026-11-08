@@ -12,4 +12,16 @@ describe('ssr', async () => {
     const html = await $fetch('/')
     expect(html).toContain('<div>basic</div>')
   })
+
+  it('evaluates configured feature flags during SSR', async () => {
+    const html = await $fetch<string>('/')
+    expect(html).toMatch(/<p>\s*Enabled feature\s*<\/p>/)
+    expect(html).toMatch(/<p>\s*Wildcard feature\s*<\/p>/)
+    expect(html).not.toMatch(/<p>\s*Disabled feature\s*<\/p>/)
+  })
+
+  it('evaluates feature flags in a server handler', async () => {
+    const flags = await $fetch('/api/flags')
+    expect(flags).toEqual({ enabled: true, wildcard: true, disabled: false })
+  })
 })

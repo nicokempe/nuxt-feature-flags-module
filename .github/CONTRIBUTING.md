@@ -61,9 +61,11 @@ feat(auth): add email otp reauthentication flow
 
 ## Releases
 
-- Ensure you are on the `main` branch with a clean working tree and are authenticated with npm.
-- Run `pnpm run release` to lint, test, build the module, update the changelog with `changelogen`, publish to npm, and push git tags.
-- Verify the release on npm and that tags were pushed upstream.
+- Follow [RELEASING.md](../RELEASING.md) and run the **Release package** workflow
+  from `main` with its internal fields empty. It validates, versions, tags, and
+  publishes the package using npm trusted publishing.
+- Let the workflow generate the calendar version and changelog. Do not edit them manually.
+- Verify the matching GitHub Release and public npm package after the workflow finishes.
 
 ## References
 
