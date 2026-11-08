@@ -5,6 +5,38 @@ generated from Conventional Commits and use the canonical `YYYY.M.RELEASE_NUMBER
 everywhere. Historical entries below retain the tag names under which they were originally
 published.
 
+## 2026.11.0
+
+[compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/2026.9.0...2026.11.0)
+
+### 📖 Documentation
+
+- **release:** ⚠️  Prepare 2026.11.0 dependency release ([202b422](https://github.com/nicokempe/nuxt-feature-flags-module/commit/202b422))
+
+### 🏡 Chore
+
+- **pnpm:** Update packages ([83e0253](https://github.com/nicokempe/nuxt-feature-flags-module/commit/83e0253))
+- **pnpm:** Update playground packages ([8b14ca2](https://github.com/nicokempe/nuxt-feature-flags-module/commit/8b14ca2))
+- **pnpm:** Update pnpm to 12.5.1 and update packages ([758c642](https://github.com/nicokempe/nuxt-feature-flags-module/commit/758c642))
+- **pnpm:** Bump nuxt version in playground from 4.4.8 to 4.5.2 ([10e6a65](https://github.com/nicokempe/nuxt-feature-flags-module/commit/10e6a65))
+- **playground:** Remove unused deps optimizations ([9e2e40c](https://github.com/nicokempe/nuxt-feature-flags-module/commit/9e2e40c))
+- **pnpm:** Upgrade pnpm version to 12.5.1 ([c005b4e](https://github.com/nicokempe/nuxt-feature-flags-module/commit/c005b4e))
+- **pnpm:** Bump wrangler from 4.136.1 to 4.147.0 ([#182](https://github.com/nicokempe/nuxt-feature-flags-module/pull/182))
+- **actions:** Bump actions/github-script from 8 to 9 ([#169](https://github.com/nicokempe/nuxt-feature-flags-module/pull/169))
+- **actions:** Bump actions/setup-node from 6.4.0 to 7.0.0 ([#166](https://github.com/nicokempe/nuxt-feature-flags-module/pull/166))
+- **dependencies:** Patch dependencies and validate Nuxt 4.6 compatibility ([da5915d](https://github.com/nicokempe/nuxt-feature-flags-module/commit/da5915d))
+
+### 🤖 CI
+
+- **release:** Use npm trusted publishing ([#168](https://github.com/nicokempe/nuxt-feature-flags-module/pull/168))
+- **release:** Upgrade used dependencies ([66e4446](https://github.com/nicokempe/nuxt-feature-flags-module/commit/66e4446))
+- **validate:** Upgrade used dependencies ([42101f5](https://github.com/nicokempe/nuxt-feature-flags-module/commit/42101f5))
+- **release:** Add zero-input releases with npm package artifacts ([6a01966](https://github.com/nicokempe/nuxt-feature-flags-module/commit/6a01966))
+
+#### ⚠️ Breaking Changes
+
+- **release:** ⚠️  Prepare 2026.11.0 dependency release ([202b422](https://github.com/nicokempe/nuxt-feature-flags-module/commit/202b422))
+
 ## 2026.9.0
 
 [compare changes](https://github.com/nicokempe/nuxt-feature-flags-module/compare/81ada268c9197600022b5a7d271f82a86b5d18f7...2026.9.0)
