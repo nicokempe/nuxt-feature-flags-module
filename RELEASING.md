@@ -1,5 +1,9 @@
 # Releasing
 
+The dependency release preparation for `2026.11.0`, including upgrade requirements, validation,
+and remaining upstream advisories, is recorded in
+[the release notes](.github/release-notes/2026.11.0.md).
+
 Open the repository's **Actions** tab, select **Release package**, choose `main`, leave the two
 internal fields empty, and click **Run workflow**. The workflow:
 
