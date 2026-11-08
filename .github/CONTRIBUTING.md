@@ -61,8 +61,8 @@ feat(auth): add email otp reauthentication flow
 
 ## Releases
 
-- Follow [RELEASING.md](../RELEASING.md) and run the **Release package** workflow
-  from `main` with its internal fields empty. It validates, versions, tags, and
+- Follow [RELEASING.md](../RELEASING.md) and run the **Release** workflow
+  from `main`; no input fields are required. It validates, versions, tags, and
   publishes the package using npm trusted publishing.
 - Let the workflow generate the calendar version and changelog. Do not edit them manually.
 - Verify the matching GitHub Release and public npm package after the workflow finishes.

@@ -1,4 +1,4 @@
-import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
@@ -8,7 +8,6 @@ import {
   type ReleaseVersion,
 } from './version-policy.ts'
 
-const changelogenVersion = '0.6.2'
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
 const packagePath = resolve(repositoryRoot, 'package.json')
 const changelogPath = resolve(repositoryRoot, 'CHANGELOG.md')
@@ -24,12 +23,6 @@ interface CliOptions {
 interface ReleaseBaseline {
   readonly commit: string
   readonly version: string
-}
-
-/** A command and its arguments. */
-interface CommandInvocation {
-  readonly argumentsList: readonly string[]
-  readonly command: string
 }
 
 /** Character offsets for one second-level Markdown section. */
@@ -117,7 +110,7 @@ function prepareNewRelease(
   }
 
   ensureVersionDoesNotExist(allTags, releaseVersion)
-  runChangelogen(packageObject, releaseVersion, previousReference)
+  runChangelogen(releaseVersion, previousReference)
   updatePackageVersion(packageObject, releaseVersion.version)
 
   return {
@@ -129,13 +122,15 @@ function prepareNewRelease(
 
 /** Invokes the pinned Changelogen CLI for Conventional Commit release notes. */
 function runChangelogen(
-  packageObject: Record<string, unknown>,
   releaseVersion: ReleaseVersion,
   previousReference: string,
 ): void {
-  const invocation = getChangelogenInvocation(packageObject)
+  const changelogenCliPath = resolve(repositoryRoot, 'node_modules/changelogen/dist/cli.mjs')
+  if (!existsSync(changelogenCliPath)) {
+    throw new Error('Installed Changelogen CLI is missing. Run pnpm install --frozen-lockfile first.')
+  }
   const commandArguments = [
-    ...invocation.argumentsList,
+    changelogenCliPath,
     '--dir',
     repositoryRoot,
     '--r',
@@ -148,7 +143,7 @@ function runChangelogen(
     'HEAD',
     '--noAuthors',
   ]
-  const commandResult = spawnSync(invocation.command, commandArguments, {
+  const commandResult = spawnSync(process.execPath, commandArguments, {
     cwd: repositoryRoot,
     env: process.env,
     stdio: 'inherit',
@@ -160,38 +155,6 @@ function runChangelogen(
   if (commandResult.status !== 0) {
     throw new Error(`Changelogen exited with status ${commandResult.status ?? 'unknown'}.`)
   }
-}
-
-/** Selects the repository package manager without adding release-only dependencies. */
-function getChangelogenInvocation(packageObject: Record<string, unknown>): CommandInvocation {
-  const packageManager = packageObject.packageManager
-  const declaresBunPackageManager = typeof packageManager === 'string'
-    && packageManager.startsWith('bun@')
-  if (typeof packageManager === 'string') {
-    if (packageManager.startsWith('pnpm@')) {
-      return {
-        command: 'pnpm',
-        argumentsList: ['dlx', `changelogen@${changelogenVersion}`],
-      }
-    }
-    if (!packageManager.startsWith('bun@')) {
-      throw new Error(`Unsupported package manager "${packageManager}".`)
-    }
-  }
-
-  const engines = packageObject.engines
-  const declaresBun = typeof engines === 'object'
-    && engines !== null
-    && !Array.isArray(engines)
-    && typeof (engines as Record<string, unknown>).bun === 'string'
-  if (declaresBunPackageManager || declaresBun) {
-    return {
-      command: 'bunx',
-      argumentsList: [`changelogen@${changelogenVersion}`],
-    }
-  }
-
-  throw new Error('package.json must declare pnpm as packageManager or a Bun engine.')
 }
 
 /** Extracts the body of a version section for the GitHub Release. */

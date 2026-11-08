@@ -1,40 +1,62 @@
 # Releasing
 
-The dependency release preparation for `2026.11.0`, including upgrade requirements, validation,
-and remaining upstream advisories, is recorded in
-[the release notes](.github/release-notes/2026.11.0.md).
+Open **[Actions → Release](https://github.com/nicokempe/nuxt-feature-flags-module/actions/workflows/release.yml)**,
+select **main**, and click **Run workflow**. There are no version or other input fields.
+That one action starts the complete release process:
 
-Open the repository's **Actions** tab, select **Release package**, choose `main`, leave the two
-internal fields empty, and click **Run workflow**. The workflow:
+1. Calculate the next Europe/Berlin calendar version, `YYYY.M.RELEASE_NUMBER`.
+2. Generate `CHANGELOG.md` from Conventional Commits and update `package.json`.
+3. Run release-tooling checks, lint, tests, type checks, and build the npm tarball.
+4. Commit the version and changelog to `main`, create an annotated tag with the exact same
+   version, and push both atomically.
+5. Automatically start the same workflow from that immutable tag. This second run validates
+   and packs the tagged source, publishes that exact `.tgz` publicly to npm with OIDC and
+   provenance, creates the matching GitHub Release, and attaches the npm tarball.
 
-1. Calculates the next Europe/Berlin calendar version as `YYYY.M.RELEASE_NUMBER`.
-2. Generates `CHANGELOG.md` from Conventional Commits with Changelogen.
-3. Updates `package.json`, then runs linting, tests, type tests, and the package build.
-4. Commits the version and changelog to `main` and creates an annotated tag with the exact same
-   version, without a `v` prefix or a zero-padded month.
-5. Queues a second run of the same workflow from the immutable release tag.
-6. Publishes `nuxt-feature-flags-module` publicly to npm through OIDC trusted publishing. Normal
-   releases receive npm's automatic provenance attestation for their exact tagged commit.
-7. Creates the matching GitHub Release using that changelog section as its release notes.
+The first run's summary links to the automatic publishing run. The publishing run's summary
+links to npm and the GitHub Release. No second click, manual version bump, local publish command,
+npm token, or manually created GitHub Release is needed.
+
+## Versioning and changelog
 
 The first release in a Berlin-local month ends in `.0`; later releases increment the final number.
-Do not edit the package version or automated changelog entries manually. Failed runs are safe to
-rerun: an unpublished version with an existing release tag is rebuilt from that exact tagged
-commit, while an npm version that already exists is skipped safely. The two workflow runs share a
-concurrency lock, so publishing starts only after release preparation has finished.
+Package version, changelog heading, tag, npm version, and GitHub Release use the same version,
+without a `v` prefix or a zero-padded month. Do not edit the version or generated changelog entries
+manually.
 
-The npm package trusts the GitHub repository's `.github/workflows/release.yml` workflow and the
-`publish-workflow` environment. Only the publish job enters that environment and requests a
-short-lived credential through GitHub Actions OIDC, so no `NPM_TOKEN` or other long-lived npm
-publish credential is required. The workflow pins an npm CLI version that supports trusted
-publishing, disables dependency caching for release builds, and grants `id-token: write` only to
-the publish job.
+Changelogen 0.6.2 is installed from the lockfile and runs locally after dependency installation;
+release preparation does not download another CLI or look up commit authors over the network.
+Dependency commits with the `deps` scope are
+included under `dependencies`, so dependency-only releases have useful changelog entries.
 
-The existing `2026.9.0` tag predates this workflow. Its one-time recovery still authenticates with
-OIDC, but deliberately disables provenance because the historical tag does not contain the trusted
-publishing workflow. Every release created by this workflow publishes from its tag with automatic
-provenance enabled.
+The dependency preparation for `2026.11.0`, including upgrade requirements and remaining upstream
+advisories, is recorded in [the preparation notes](.github/release-notes/2026.11.0.md).
 
-After the first successful trusted publish, npm's **Publishing access** should be set to **Require
-two-factor authentication and disallow tokens**, and any obsolete npm automation token should be
-revoked.
+## Retrying a failed release
+
+Use **Re-run failed jobs** on the failed run, or run **Release** from `main` again. If the current
+version has a release tag but npm publishing, GitHub Release creation, or tarball attachment is
+incomplete, the workflow resumes that exact tagged source without allocating a new version.
+An already published npm version is skipped while the remaining GitHub steps are repaired.
+Once npm and the GitHub Release (including its tarball) are complete, a main-branch run with
+subsequent commits allocates a new version. Running again while `main` still points exactly at
+the completed release tag keeps that version. Releases are serialized to prevent overlapping
+version allocation.
+
+## npm trusted publishing
+
+The existing npm trusted publisher remains `.github/workflows/release.yml` in
+`nicokempe/nuxt-feature-flags-module`, with environment `publish-workflow`. Only the publishing job
+enters that environment and receives `id-token: write`; no long-lived `NPM_TOKEN` is required.
+Keep the publisher's filename and environment configured on npm. Existing environment protection
+rules, if any, still apply.
+
+The second run is necessary because npm derives provenance from the workflow's triggering ref
+and commit. Publishing directly after a version commit in the first run would attribute the
+package to the previous commit. The publishing run therefore requires the workflow SHA, checkout,
+release tag, and package version to agree. Provenance cannot be disabled as a recovery shortcut.
+
+The historical `2026.9.0` package and GitHub Release were already published before this zero-input
+workflow. Their old tag lacks this workflow and is treated as a completed legacy release. Older
+incomplete tags cannot use the new tag-publishing path; reruns of the historical workflow retain
+that workflow's original behavior.

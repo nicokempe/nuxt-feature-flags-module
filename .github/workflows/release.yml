@@ -1,17 +1,8 @@
-name: Release package
-run-name: Release nuxt-feature-flags-module ${{ inputs.publish_version || github.ref_name }}
+name: Release
+run-name: Release nuxt-feature-flags-module ${{ github.ref_name }}
 
 on:
   workflow_dispatch:
-    inputs:
-      publish_version:
-        description: "Internal: leave empty when starting a release"
-        required: false
-        type: string
-      source_commit:
-        description: "Internal: leave empty when starting a release"
-        required: false
-        type: string
 
 permissions: {}
 
@@ -27,7 +18,7 @@ env:
 jobs:
   prepare:
     name: Prepare release
-    if: inputs.publish_version == ''
+    if: github.ref_type != 'tag'
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -66,7 +57,9 @@ jobs:
       - name: Install trusted publishing npm CLI
         run: npm install --global "npm@${NPM_CLI_VERSION}"
 
-      - name: Resume an unpublished tagged release
+      - name: Resume an incomplete tagged release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           current_version="$(node -p "require('./package.json').version")"
           if ! [[ "${current_version}" =~ ^[0-9]{4}\.([1-9]|1[0-2])\.(0|[1-9][0-9]*)$ ]]; then
@@ -84,6 +77,11 @@ jobs:
             exit 1
           fi
 
+          supports_tag_publish=false
+          if git show "${current_version}:.github/workflows/release.yml" | grep -q "if: github.ref_type == 'tag'"; then
+            supports_tag_publish=true
+          fi
+
           package_lookup_error="${RUNNER_TEMP}/nuxt-feature-flags-module-resume-lookup.log"
           set +e
           published_version="$(npm view "${PACKAGE_NAME}@${current_version}" version --registry "${PACKAGE_REGISTRY}" 2>"${package_lookup_error}")"
@@ -95,19 +93,37 @@ jobs:
               echo "::error::Registry returned unexpected version ${published_version}."
               exit 1
             fi
-            echo "${PACKAGE_NAME}@${current_version} is already published; preparing the next release."
-          elif grep -Eq 'E404|404 Not Found' "${package_lookup_error}"; then
-            git checkout --detach "${tagged_commit}"
-            tagged_version="$(node -p "require('./package.json').version")"
-            if [[ "${tagged_version}" != "${current_version}" ]]; then
-              echo "::error::Release tag ${current_version} contains package version ${tagged_version}."
+            release_lookup_error="${RUNNER_TEMP}/nuxt-feature-flags-module-release-lookup.log"
+            release_ready_query='.draft == false and .prerelease == false'
+            if [[ "${supports_tag_publish}" == "true" ]]; then
+              release_ready_query+=" and any(.assets[]; .name == \"${PACKAGE_NAME}-${current_version}.tgz\")"
+            fi
+            if release_ready="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${current_version}" --jq "${release_ready_query}" 2>"${release_lookup_error}")"; then
+              if [[ "${release_ready}" == "true" ]]; then
+                echo "${PACKAGE_NAME}@${current_version} and its GitHub Release are complete; preparing the next release."
+                exit 0
+              fi
+            elif ! grep -Eq 'HTTP 404|Not Found' "${release_lookup_error}"; then
+              cat "${release_lookup_error}"
               exit 1
             fi
-            echo "Resuming unpublished release ${current_version} from ${tagged_commit}."
-          else
+            echo "npm already contains ${current_version}; resuming its incomplete GitHub Release."
+          elif ! grep -Eq 'E404|404 Not Found' "${package_lookup_error}"; then
             cat "${package_lookup_error}"
             exit "${package_lookup_status}"
           fi
+
+          if [[ "${supports_tag_publish}" != "true" ]]; then
+            echo "::error::Historical tag ${current_version} cannot resume through zero-input publishing."
+            exit 1
+          fi
+          git checkout --detach "${tagged_commit}"
+          tagged_version="$(node -p "require('./package.json').version")"
+          if [[ "${tagged_version}" != "${current_version}" ]]; then
+            echo "::error::Release tag ${current_version} contains package version ${tagged_version}."
+            exit 1
+          fi
+          echo "Resuming release ${current_version} from ${tagged_commit}."
 
       - name: Install pnpm
         uses: pnpm/action-setup@v6
@@ -142,14 +158,22 @@ jobs:
       - name: Run type tests
         run: pnpm run test:types
 
-      - name: Build package
-        run: pnpm run prepack
-
-      - name: Pack publishable package
+      - name: Build and pack publishable package
+        id: package
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
         run: |
           package_archive_directory="${RUNNER_TEMP}/nuxt-feature-flags-module-package"
           mkdir -p "${package_archive_directory}"
           pnpm pack --pack-destination "${package_archive_directory}"
+          package_archive="${package_archive_directory}/${PACKAGE_NAME}-${VERSION}.tgz"
+          test -s "${package_archive}"
+          tar -tzf "${package_archive}" > "${package_archive}.contents"
+          for required_file in dist/module.mjs dist/types.d.mts dist/runtime/plugin.js dist/runtime/server/isFeatureEnabled.js dist/runtime/utils/flagValidator.js; do
+            grep -Fx "package/${required_file}" "${package_archive}.contents" > /dev/null
+          done
+          git diff --exit-code -- src/runtime
+          echo "archive_path=${package_archive}" >> "${GITHUB_OUTPUT}"
 
       - name: Commit and tag release
         if: steps.release.outputs.should_commit == 'true'
@@ -184,31 +208,33 @@ jobs:
             exit 1
           fi
 
-          dispatch_ref="${VERSION}"
-          if ! git show "${VERSION}:.github/workflows/release.yml" | grep -q 'publish_version:'; then
-            dispatch_ref="main"
-            echo "::notice::The historical release workflow cannot publish through OIDC; the current main workflow will recover this tag without provenance."
+          if ! git show "${VERSION}:.github/workflows/release.yml" | grep -q "if: github.ref_type == 'tag'"; then
+            echo "::error::Release tag ${VERSION} predates zero-input publishing. It cannot be published with matching provenance by this workflow."
+            exit 1
           fi
 
-          gh workflow run release.yml \
-            --ref "${dispatch_ref}" \
-            --field "publish_version=${VERSION}" \
-            --field "source_commit=${source_commit}"
+          gh workflow run release.yml --ref "${VERSION}"
+          {
+            echo "## Release ${VERSION} prepared"
+            echo "The version, changelog, and annotated tag are ready."
+            echo "Publishing starts automatically from the immutable release tag."
+            echo "[Follow the publish run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/workflows/release.yml?query=branch%3A${VERSION})"
+          } >> "${GITHUB_STEP_SUMMARY}"
 
   publish:
     name: Publish public npm package
-    if: inputs.publish_version != ''
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
     environment: publish-workflow
+    env:
+      VERSION: ${{ github.ref_name }}
+      SOURCE_COMMIT: ${{ github.sha }}
     permissions:
       contents: write
       id-token: write
 
     steps:
       - name: Validate publish request
-        env:
-          SOURCE_COMMIT: ${{ inputs.source_commit }}
-          VERSION: ${{ inputs.publish_version }}
         run: |
           if ! [[ "${VERSION}" =~ ^[0-9]{4}\.([1-9]|1[0-2])\.(0|[1-9][0-9]*)$ ]]; then
             echo "::error::Publish version ${VERSION} does not use YYYY.M.N."
@@ -222,14 +248,10 @@ jobs:
       - name: Checkout release commit
         uses: actions/checkout@v7.0.1
         with:
-          ref: ${{ inputs.source_commit }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
 
       - name: Verify release tag and provenance source
-        id: source
-        env:
-          SOURCE_COMMIT: ${{ inputs.source_commit }}
-          VERSION: ${{ inputs.publish_version }}
         run: |
           git fetch --force --tags origin
           checked_out_commit="$(git rev-parse HEAD)"
@@ -245,13 +267,11 @@ jobs:
             exit 1
           fi
 
-          if [[ "${GITHUB_SHA}" == "${SOURCE_COMMIT}" && "${GITHUB_REF}" == "refs/tags/${VERSION}" ]]; then
-            echo "provenance=true" >> "${GITHUB_OUTPUT}"
-            echo "Publishing with automatic npm provenance from ${GITHUB_REF}."
-          else
-            echo "provenance=false" >> "${GITHUB_OUTPUT}"
-            echo "::notice::Publishing the historical release with OIDC but without provenance because this workflow run is not sourced from its tag."
+          if [[ "${GITHUB_SHA}" != "${tagged_commit}" || "${GITHUB_REF}" != "refs/tags/${VERSION}" ]]; then
+            echo "::error::Publishing must run from the exact release tag and commit for npm provenance."
+            exit 1
           fi
+          echo "Publishing with npm provenance from ${GITHUB_REF}."
 
       - name: Install pnpm
         uses: pnpm/action-setup@v6
@@ -285,7 +305,6 @@ jobs:
         env:
           PREPARED_VERSION: ${{ steps.release.outputs.version }}
           SHOULD_COMMIT: ${{ steps.release.outputs.should_commit }}
-          VERSION: ${{ inputs.publish_version }}
         run: |
           if [[ "${PREPARED_VERSION}" != "${VERSION}" ]]; then
             echo "::error::Prepared version ${PREPARED_VERSION} does not match requested version ${VERSION}."
@@ -312,19 +331,26 @@ jobs:
       - name: Run type tests
         run: pnpm run test:types
 
-      - name: Build package
-        run: pnpm run prepack
-
-      - name: Pack publishable package
+      - name: Build and pack publishable package
+        id: package
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
         run: |
           package_archive_directory="${RUNNER_TEMP}/nuxt-feature-flags-module-package"
           mkdir -p "${package_archive_directory}"
           pnpm pack --pack-destination "${package_archive_directory}"
+          package_archive="${package_archive_directory}/${PACKAGE_NAME}-${VERSION}.tgz"
+          test -s "${package_archive}"
+          tar -tzf "${package_archive}" > "${package_archive}.contents"
+          for required_file in dist/module.mjs dist/types.d.mts dist/runtime/plugin.js dist/runtime/server/isFeatureEnabled.js dist/runtime/utils/flagValidator.js; do
+            grep -Fx "package/${required_file}" "${package_archive}.contents" > /dev/null
+          done
+          git diff --exit-code -- src/runtime
+          echo "archive_path=${package_archive}" >> "${GITHUB_OUTPUT}"
 
       - name: Publish public npm package with OIDC
         env:
-          PROVENANCE: ${{ steps.source.outputs.provenance }}
-          VERSION: ${{ inputs.publish_version }}
+          PACKAGE_ARCHIVE: ${{ steps.package.outputs.archive_path }}
         run: |
           package_lookup_error="${RUNNER_TEMP}/nuxt-feature-flags-module-package-lookup.log"
           set +e
@@ -339,11 +365,7 @@ jobs:
             fi
             echo "${PACKAGE_NAME}@${VERSION} is already published; skipping."
           elif grep -Eq 'E404|404 Not Found' "${package_lookup_error}"; then
-            if [[ "${PROVENANCE}" == "true" ]]; then
-              npm publish --access public
-            else
-              NPM_CONFIG_PROVENANCE=false npm publish --access public
-            fi
+            npm publish "${PACKAGE_ARCHIVE}" --access public --provenance
           else
             cat "${package_lookup_error}"
             exit "${package_lookup_status}"
@@ -353,7 +375,6 @@ jobs:
         uses: actions/github-script@v9
         env:
           RELEASE_NOTES_PATH: ${{ steps.release.outputs.release_notes_path }}
-          VERSION: ${{ inputs.publish_version }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -401,3 +422,17 @@ jobs:
                 prerelease: false,
               })
             }
+
+      - name: Attach npm package to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGE_ARCHIVE: ${{ steps.package.outputs.archive_path }}
+        run: |
+          gh release upload "${VERSION}" "${PACKAGE_ARCHIVE}" --clobber
+          {
+            echo "## Released ${PACKAGE_NAME}@${VERSION}"
+            echo "- [npm package](https://www.npmjs.com/package/${PACKAGE_NAME}/v/${VERSION})"
+            echo "- [GitHub Release and npm tarball](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${VERSION})"
+            echo "- Source commit: ${SOURCE_COMMIT}"
+            echo "- npm provenance: enabled"
+          } >> "${GITHUB_STEP_SUMMARY}"

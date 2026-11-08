@@ -3,5 +3,11 @@
     "commitMessage": "chore(release): {{newVersion}}",
     "tagMessage": "{{newVersion}}",
     "tagBody": "{{newVersion}}"
-  }
+  },
+  "scopeMap": {
+    "deps": "dependencies"
+  },
+  "excludeAuthors": [
+    ""
+  ]
 }

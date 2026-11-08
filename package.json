@@ -52,7 +52,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
-    "release:check": "tsc --project scripts/release/tsconfig.json && node --test scripts/release/version-policy.node.ts",
+    "release:check": "tsc --project scripts/release/tsconfig.json && node --test scripts/release/*.node.ts",
     "release:prepare": "node scripts/release/prepare-release.ts",
     "refresh": "rm -rf pnpm-lock.yaml .nuxt/ dist/ node_modules/ playground/.nuxt/ playground/.output/ playground/node_modules/ && pnpm install && nuxi prepare && pnpm run lint:fix && pnpm run test && pnpm run prepack && pnpm run dev"
   },
@@ -69,7 +69,7 @@
     "@nuxt/schema": "4.6.4",
     "@nuxt/test-utils": "4.3.4",
     "@types/node": "24.19.2",
-    "changelogen": "^0.6.2",
+    "changelogen": "0.6.2",
     "eslint": "10.14.0",
     "nuxt": "4.6.4",
     "typescript": "5.9.3",

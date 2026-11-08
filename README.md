@@ -178,9 +178,10 @@ definePageMeta({
 
 ## Releases
 
-Maintainers publish the public npm package and matching GitHub Release from the **Release package**
-workflow. Versioning, credentials, and retry behavior are documented in
-[RELEASING.md](./RELEASING.md).
+Maintainers open **[Actions → Release](https://github.com/nicokempe/nuxt-feature-flags-module/actions/workflows/release.yml)**,
+select **main**, and click **Run workflow**. No input fields are required. The workflow bumps the
+version, updates `CHANGELOG.md`, publishes to npm with provenance, creates the GitHub Release,
+and attaches the npm tarball. See [RELEASING.md](./RELEASING.md) for versioning and retry behavior.
 
 ## License
 This project is licensed under the [MIT License](https://github.com/nicokempe/nuxt-feature-flags-module/blob/main/LICENSE).
