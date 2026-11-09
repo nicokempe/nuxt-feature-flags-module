@@ -68,7 +68,7 @@
     "@nuxt/module-builder": "1.0.3",
     "@nuxt/schema": "4.6.4",
     "@nuxt/test-utils": "4.3.4",
-    "@types/node": "24.19.2",
+    "@types/node": "26.6.6",
     "changelogen": "0.6.2",
     "eslint": "10.14.0",
     "nuxt": "4.6.4",
